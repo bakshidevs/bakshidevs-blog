@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type States = {
     isDarkModeEnabled: boolean;
@@ -9,16 +10,26 @@ type Actions = {
     toggleTheme: () => void;
 }
 
-const useThemeStore = create<States & Actions>((set) => ({
-    isDarkModeEnabled: false,
-    theme: "light",
-    toggleTheme: () => set((state) => {
-        const isDarkModeEnabled = !state.isDarkModeEnabled
-        return {
-        isDarkModeEnabled: isDarkModeEnabled,
-        theme: isDarkModeEnabled ? "dark" : "light"
-    }
-    })
-}))
+type ThemeStore = States & Actions;
+
+const useThemeStore = create<ThemeStore>()(
+    persist(
+        (set) => ({
+            isDarkModeEnabled: false,
+            theme: "light",
+            toggleTheme: () => set((state) => {
+                const isDark = !state.isDarkModeEnabled
+                return {
+                    isDarkModeEnabled: isDark,
+                    theme: isDark ? "dark" : "light"
+                }
+            })
+        }),
+        {
+            name: "theme-storage",
+            storage: createJSONStorage(() => localStorage),
+        }
+    )
+)
 
 export default useThemeStore;
