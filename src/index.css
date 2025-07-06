@@ -15,7 +15,7 @@
         box-sizing: border-box;
     }
 
-    button, input {
+    button {
         cursor: pointer;
     }
 }

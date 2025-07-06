@@ -12,9 +12,53 @@ import clsx from "clsx";
 import { useState } from "react";
 
 // importing react router for navigation
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+
+// importing authStore
+import useAuthStore from "../store/authStore";
+
+// form data type
+type FormData = {
+    email: string;
+    password: string;
+};
+
 export default function Login() {
+    const { login } = useAuthStore();
+    // userNavigate to navigate to user after login
+    const navigate = useNavigate();
+
+    // state to manage password visibility
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [formData, setFormData] = useState<FormData>({
+        email: '',
+        password: ''
+    })
+
+    // handle input change
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    // handle login function
+    const handleLogin = async () => {
+        // validate form data
+        if (!formData.email || !formData.password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+        // calling login function from authStore
+        const { success } = await login(formData);
+        if (success) {
+            // redirect to home page after successful login
+            navigate('/');
+        } else {
+            // show error message if login failed
+            alert("Login failed. Please check your credentials and try again.");
+        }
+
+    }
     return (
         <div className="flex flex-col items-center justify-center h-full bg-primary dark:bg-secondary p-4">
             <h1 className="font-bold text-4xl mb-4 w-2/3 sm:w-1/2 text-center">
@@ -29,9 +73,11 @@ export default function Login() {
                     <Field className="relative">
                         <Label htmlFor="email">Email</Label>
                         <Input
+                            value={formData.email}
+                            onChange={handleChange}
                             className={clsx(
                                 'mt-3 block w-full rounded-lg border-none bg-secondary/10 dark:bg-primary/10 px-3 py-2 text-sm/6 text-secondary dark:text-primary',
-                                'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
+                            'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
                             )}
                             name="email"
                             type="email"
@@ -40,6 +86,8 @@ export default function Login() {
                     <Field className="relative">
                         <Label htmlFor="password">Password</Label>
                         <Input
+                            value={formData.password}
+                            onChange={handleChange}
                             className={clsx(
                                 'mt-3 block w-full rounded-lg border-none bg-secondary/10 dark:bg-primary/10 px-3 py-2 text-sm/6 text-secondary dark:text-primary',
                                 'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
@@ -51,7 +99,7 @@ export default function Login() {
                             {!showPassword ? <Eye /> : <EyeClosed />}
                         </button>
                     </Field>
-                    <button className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
+                    <button type="submit" onClick={handleLogin} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
                         Login
                     </button>
                 </div>

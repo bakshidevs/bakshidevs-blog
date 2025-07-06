@@ -6,7 +6,7 @@ import { Coffee } from "lucide-react"
 export default function NotFound() {
   const { isAuthenticated } = useAuthStore()
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-full">
       <div className="w-1/2 p-4 border border-secondary dark:border-primary/50 rounded-md bg-secondary/10 dark:bg-primary/10">
         <Coffee className="w-12 h-12 p-2 pl-0" />
         <h2 className="font-bold text-2xl underline">
