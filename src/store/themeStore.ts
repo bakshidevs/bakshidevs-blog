@@ -10,8 +10,8 @@ type Actions = {
 }
 
 const useThemeStore = create<States & Actions>((set) => ({
-    isDarkModeEnabled: true,
-    theme: "dark",
+    isDarkModeEnabled: false,
+    theme: "light",
     toggleTheme: () => set((state) => {
         const isDarkModeEnabled = !state.isDarkModeEnabled
         return {

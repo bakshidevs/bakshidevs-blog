@@ -1,12 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router"
+
+// importing global layout component
 import Layout from "./Layout"
+
+// importing pages/routes
+import Index from "./pages/Index"
 
 export default function App() {
   return (
-    <div>
+    <BrowserRouter>
       <Layout>
-        <h1 className="font-bold">Welcome to My Blog</h1>
-        <p>This is a simple blog application.</p>
+        <Routes>
+          <Route path="/" element={<Index />} />
+        </Routes>
       </Layout>
-    </div>
+    </BrowserRouter>
   )
 }

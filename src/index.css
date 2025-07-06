@@ -2,11 +2,19 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+    --color-primary: #FAF4ED;
+    --color-secondary: #2F2A25;
+    --color-accent: #B4637A;
+    --color-olive: #7F8B49;
+}
+
 @layer base {
     * {
         box-sizing: border-box;
     }
-    button {
+
+    button, input {
         cursor: pointer;
     }
 }
