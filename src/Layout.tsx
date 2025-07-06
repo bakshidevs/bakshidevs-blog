@@ -10,9 +10,9 @@ import useThemeStore from "./store/themeStore";
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { theme } = useThemeStore();
     return (
-        <div className={`${theme} relative min-h-screen bg-primary text-[#2F2A25] dark:bg-secondary dark:accent-green-500 dark:text-primary transition-all duration-300`}>
+        <div className={`${theme} grid grid-rows-[auto_1fr_auto] relative min-h-screen bg-primary dark:bg-secondary dark:accent-green-500 dark:text-primary transition-all duration-300`}>
             <Header />
-            <main className="">
+            <main className="relative">
                 {children}
             </main>
             <Footer />

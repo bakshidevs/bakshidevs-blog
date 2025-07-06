@@ -18,7 +18,4 @@
     button, input {
         cursor: pointer;
     }
-    a {
-        @apply underline text-olive hover:text-accent ;
-    }
 }

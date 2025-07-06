@@ -14,7 +14,7 @@ export default function NotFound() {
         </h2>
         <p>
           The page you are looking for does not exist or has been moved.
-          Please check the URL or return to the <Link className="font-medium" to="/">homepage</Link>.
+          Please check the URL or return to the <Link className="font-medium text-olive hover:text-accent underline" to="/">homepage</Link>.
         </p>
         {isAuthenticated ? (
           <p className="mt-4">
@@ -22,7 +22,7 @@ export default function NotFound() {
           </p>
         ) : (
           <p className="mt-4">
-            Please <Link to="/login" className="">log in</Link> to access more features.
+            Please <Link to="/login" className="text-olive underline hover:text-accent">log in</Link> to access more features.
           </p>
         )}
       </div>
