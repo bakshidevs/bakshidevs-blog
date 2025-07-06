@@ -3,6 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+    --color-base: #937c6c;
     --color-primary: #FAF4ED;
     --color-secondary: #2F2A25;
     --color-accent: #B4637A;
@@ -16,5 +17,8 @@
 
     button, input {
         cursor: pointer;
+    }
+    a {
+        @apply underline text-olive hover:text-accent ;
     }
 }

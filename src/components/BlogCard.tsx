@@ -1,4 +1,4 @@
-import Tags from "./Tags"
+import Tags from "./ui/Tags"
 
 
 export default function BlogCard() {
@@ -18,7 +18,7 @@ export default function BlogCard() {
         isArchived: false,
     }
     return (
-        <div className="group rounded-md w-84 overflow-hidden transition border border-secondary/20 bg-accent/5">
+        <div className="group rounded-md w-84 overflow-hidden transition border border-secondary/20 bg-primary/10">
             <div className="overflow-hidden">
                 <img
                 className="rounded-t-md transition-transform duration-500 group-hover:scale-105 overflow-hidden"
