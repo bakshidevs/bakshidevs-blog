@@ -14,6 +14,9 @@ import Write from "./pages/Write";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import LoggedOutProtectedRoute from "./components/LoggedOutProtectedRoute";
+import Settings from "./pages/Settings";
+import BlogPage from "./pages/BlogPage";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
@@ -21,6 +24,7 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/blog/:slug" element={<BlogPage />} />
           <Route element={<LoggedOutProtectedRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Signup />} />
@@ -28,6 +32,8 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/write" element={<Write />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

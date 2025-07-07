@@ -86,6 +86,8 @@ export default function Login() {
                             )}
                             name="email"
                             type="email"
+                            autoComplete="email"
+                            placeholder="Enter your email address"
                         />
                     </Field>
                     <Field className="relative">
@@ -99,6 +101,8 @@ export default function Login() {
                             )}
                             name="password"
                             type={showPassword ? "text" : "password"}
+                            autoComplete="current-password"
+                            placeholder="Enter your password"
                         />
                         <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowPassword(prevState => !prevState)}>
                             {!showPassword ? <Eye /> : <EyeClosed />}

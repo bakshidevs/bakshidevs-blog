@@ -1,8 +1,8 @@
 
 export default function Tags({ tag }: { tag: string }) {
     return (
-        <div className="bg-accent/20 dark:bg-accent/20 text-secondary dark:text-primary px-3 py-1 rounded-xl font-medium mr-2 mb-2">
+        <span className="px-3 py-1 bg-accent/10 dark:bg-accent/20 rounded-full text-xs font-medium text-accent dark:text-accent/80">
             {tag}
-        </div>
+        </span>
     )
 }

@@ -7,7 +7,7 @@ export default function NotFound() {
   const { isAuthenticated } = useAuthStore()
   return (
     <div className="flex items-center justify-center h-full">
-      <div className="w-2/3 md:max-w-1/3 p-4 border border-secondary dark:border-primary/50 rounded-md bg-secondary/10 dark:bg-primary/10">
+      <div className="w-2/3 md:max-w-1/3 p-4 border border-accent dark:border-accent/50 rounded-md bg-secondary/10 dark:bg-primary/10">
         <Coffee className="w-12 h-12 p-2 pl-0" />
         <h2 className="font-bold text-2xl underline">
           Page Not Found!

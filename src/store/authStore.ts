@@ -24,7 +24,7 @@ type AuthActions = {
 
 const useAuthStore = create<AuthState & AuthActions>()(
     persist((set) => ({
-        isLoading: true,
+        isLoading: false,
         isAuthenticated: false,
         user: null,
         fetchUser: async () => {
