@@ -1,10 +1,18 @@
 import Tags from "./ui/Tags"
-
+import LoadingScreen from "./LoadingScreen"
+import { useEffect, useState } from "react"
 
 export default function BlogCard() {
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1200)
+        return () => clearTimeout(timer)
+    }, [])
+
     const blog = {
         tite: "React: A JavaScript Library for Building User Interfaces",
-        createdAt: Date.now(),
+        createdAt: "06/07/2025",
         author: "Bakshidevs",
         excerpt: "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of their applications efficiently. React's virtual DOM and component-based architecture make it a popular choice for modern web development.",
         tags: ["JavaScript", "React", "Web Development"],
@@ -17,6 +25,9 @@ export default function BlogCard() {
         isDraft: false,
         isArchived: false,
     }
+
+    if (loading) return <LoadingScreen />
+
     return (
         <div className="group rounded-md w-84 overflow-hidden transition border border-secondary/20 bg-primary/10">
             <div className="overflow-hidden">

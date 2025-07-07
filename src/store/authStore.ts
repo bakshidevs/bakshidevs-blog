@@ -15,7 +15,7 @@ type AuthState = {
 
 type AuthActions = {
     fetchUser: () => Promise<{ success: boolean }>;
-    createAccount: ({ email, password, fullname }: { email: string, password: string, fullname: string }) => Promise<{ success: boolean }>;
+    signup: ({ email, password, fullname }: { email: string, password: string, fullname: string }) => Promise<{ success: boolean }>;
     login: ({ email, password }: { email: string, password: string }) => Promise<{ success: boolean }>;
     logout: () => Promise<void>;
     globalLogout: () => Promise<void>;
@@ -42,7 +42,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 set({ isLoading: false });
             }
         },
-        createAccount: async ({ email, password, fullname }) => {
+        signup: async ({ email, password, fullname }) => {
             set({ isLoading: true });
             try {
                 await account.create(ID.unique(), email, password, fullname);

@@ -9,7 +9,7 @@ import { CoffeeIcon, Eye, EyeClosed } from "lucide-react";
 import clsx from "clsx";
 
 // importing react hooks
-import { useState } from "react";
+import React, { useState } from "react";
 
 // importing react router for navigation
 import { Link, useNavigate } from "react-router";
@@ -24,7 +24,7 @@ type FormData = {
 };
 
 export default function Login() {
-    const { login } = useAuthStore();
+    const { login, isLoading } = useAuthStore();
     // userNavigate to navigate to user after login
     const navigate = useNavigate();
 
@@ -42,14 +42,19 @@ export default function Login() {
     };
 
     // handle login function
-    const handleLogin = async () => {
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
         // validate form data
         if (!formData.email || !formData.password) {
             alert("Please fill in all fields.");
             return;
         }
+
         // calling login function from authStore
-        const { success } = await login(formData);
+        const email = formData.email.trim().toLowerCase();
+        const password = formData.password.trim();
+
+        const { success } = await login({ email, password });
         if (success) {
             // redirect to home page after successful login
             navigate('/');
@@ -69,7 +74,7 @@ export default function Login() {
             </p>
             <div className="xs:w-80 w-96 border p-4 rounded-lg">
                 <h2 className="flex font-medium gap-2"><CoffeeIcon /> Sign In</h2>
-                <div aria-label="login-form-container" className="">
+                <form aria-label="login-form" className="">
                     <Field className="relative">
                         <Label htmlFor="email">Email</Label>
                         <Input
@@ -77,7 +82,7 @@ export default function Login() {
                             onChange={handleChange}
                             className={clsx(
                                 'mt-3 block w-full rounded-lg border-none bg-secondary/10 dark:bg-primary/10 px-3 py-2 text-sm/6 text-secondary dark:text-primary',
-                            'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
+                                'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
                             )}
                             name="email"
                             type="email"
@@ -95,14 +100,14 @@ export default function Login() {
                             name="password"
                             type={showPassword ? "text" : "password"}
                         />
-                        <button className="absolute bottom-2 right-2" onClick={() => setShowPassword(prevState => !prevState)}>
+                        <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowPassword(prevState => !prevState)}>
                             {!showPassword ? <Eye /> : <EyeClosed />}
                         </button>
                     </Field>
-                    <button type="submit" onClick={handleLogin} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
-                        Login
+                    <button disabled={isLoading} type="submit" onClick={handleLogin} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
+                        {isLoading ? "Logging in..." : "Login"}
                     </button>
-                </div>
+                </form>
                 <div className="">
                     <p className="mt-2 text-center">
                         Doesn't have an account? <Link to="/register" className="text-olive hover:text-accent underline">Register</Link>

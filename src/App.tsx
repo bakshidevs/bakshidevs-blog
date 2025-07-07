@@ -11,6 +11,9 @@ import NotFound from "./NotFound";
 // protected routes
 import ProtectedRoute from "./components/ProtectedRoute";
 import Write from "./pages/Write";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
+import LoggedOutProtectedRoute from "./components/LoggedOutProtectedRoute";
 
 export default function App() {
   return (
@@ -18,12 +21,14 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/write" element={
-            <ProtectedRoute>
-              <Write />
-            </ProtectedRoute>
-          } />
+          <Route element={<LoggedOutProtectedRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Signup />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/write" element={<Write />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
