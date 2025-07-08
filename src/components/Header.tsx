@@ -9,7 +9,7 @@ export default function Header() {
   const { toggleTheme, isDarkModeEnabled } = useThemeStore();
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const navitems = [
-    { name: "Blog", path: "/blog" },
+    { name: "Blogs", path: "/blogs" },
     { name: "Contact", path: "/contact" },
   ];
   const profileMenuItems = [
@@ -21,7 +21,7 @@ export default function Header() {
   const { isAuthenticated, user, logout } = useAuthStore();
 
   return (
-    <header aria-label="header" className="border-0 border-secondary dark:border-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 shadow-2xl max-w-screen">
+    <header aria-label="header" className="border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 shadow-2xl max-w-screen">
       <div className="flex items-center gap-2">
         <Link to="/">
           <CoffeeIcon className="w-8 h-8" />
@@ -89,7 +89,7 @@ export default function Header() {
             </>
           )}
           <div
-            className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1"
+            className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1 mr-4"
             onClick={toggleTheme}
           >
             <span

@@ -55,7 +55,7 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
-      <h1 className="font-bold text-4xl mb-4 w-2/3 sm:w-1/2 text-center">
+      <h1 className="font-bold text-4xl m-4 w-2/3 text-center">
         Create your Bakshidevs blog account!
       </h1>
       <p className="w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
