@@ -54,14 +54,14 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-primary dark:bg-secondary p-4">
+    <div className="flex flex-col items-center justify-center h-full p-4">
       <h1 className="font-bold text-4xl mb-4 w-2/3 sm:w-1/2 text-center">
         Create your Bakshidevs blog account!
       </h1>
       <p className="w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
         Sign up to join our community and start sharing your own articles and insights.
       </p>
-      <div className="xs:w-80 w-96 border p-4 rounded-lg">
+      <div className="xs:w-80 w-96 border border-accent dark:border-olive p-4 rounded-lg">
         <h2 className="flex font-medium gap-2"><CoffeeIcon /> Sign Up</h2>
         <form aria-label="signup-form" className="">
           <Field className="relative">

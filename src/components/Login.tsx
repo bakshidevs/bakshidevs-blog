@@ -65,15 +65,16 @@ export default function Login() {
 
     }
     return (
-        <div className="flex flex-col items-center justify-center h-full bg-primary dark:bg-secondary p-4">
-            <h1 className="font-bold text-4xl mb-4 w-2/3 sm:w-1/2 text-center">
+        <div className="flex flex-col items-center justify-center h-full">
+            <h1 className="font-bold text-4xl mb-4 md:w-2/3 sm:w-1/2 text-center">
                 Welcome back to Bakshidevs blog!
             </h1>
-            <p className="w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
+            <p className="md:w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
                 Please enter your credentials to sign in and continue reading our latest articles and updates.
             </p>
-            <div className="xs:w-80 w-96 border p-4 rounded-lg">
-                <h2 className="flex font-medium gap-2"><CoffeeIcon /> Sign In</h2>
+            <div className="xs:w-80 w-96 border border-olive dark:border-accent p-4 rounded-lg">
+                <h2 className="flex items-center underline font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign In</h2>
+                <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
                 <form aria-label="login-form" className="">
                     <Field className="relative">
                         <Label htmlFor="email">Email</Label>
@@ -104,7 +105,7 @@ export default function Login() {
                             autoComplete="current-password"
                             placeholder="Enter your password"
                         />
-                        <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowPassword(prevState => !prevState)}>
+                        <button type="button" className="absolute bottom-2 right-2 text-accent" onClick={() => setShowPassword(prevState => !prevState)}>
                             {!showPassword ? <Eye /> : <EyeClosed />}
                         </button>
                     </Field>

@@ -11,8 +11,8 @@ export default function Profile() {
                 <p className="text-secondary/70 dark:text-primary/50">Welcome, {user?.name}!</p>
                 <p className="text-secondary/70 dark:text-primary/50">Email: {user?.email}</p>
                 <p className="text-secondary/70 dark:text-primary/50">Labels: {user?.labels.join(", ")}</p>
-                <button className="flex text-xl items-center gap-1 bg-accent text-primary p-1 w-full justify-center rounded-md hover:bg-accent/80 transition-colors mt-2`">
-                    Logout <LogOut className="w-4 h-4" onClick={logout} />
+                <button onClick={logout} className="flex text-xl items-center gap-1 bg-accent text-primary p-1 w-full justify-center rounded-md hover:bg-accent/80 transition-colors mt-2`">
+                    Logout <LogOut className="w-4 h-4" />
                 </button>
             </div>
         </div>

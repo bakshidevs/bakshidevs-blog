@@ -5,14 +5,14 @@ import Layout from "./Layout";
 
 // importing pages/routes
 import Index from "./pages/Index";
-import Login from "./pages/Login";
+import LoginPage from "./pages/LoginPage";
 import NotFound from "./NotFound";
 
 // protected routes
 import ProtectedRoute from "./components/ProtectedRoute";
 import Write from "./pages/Write";
 import Profile from "./pages/Profile";
-import Signup from "./pages/Signup";
+import SignupPage from "./pages/SignupPage";
 import LoggedOutProtectedRoute from "./components/LoggedOutProtectedRoute";
 import Settings from "./pages/Settings";
 import BlogPage from "./pages/BlogPage";
@@ -26,8 +26,8 @@ export default function App() {
           <Route path="/" element={<Index />} />
           <Route path="/blog/:slug" element={<BlogPage />} />
           <Route element={<LoggedOutProtectedRoute />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Signup />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<SignupPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/write" element={<Write />} />
