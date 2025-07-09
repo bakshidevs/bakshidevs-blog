@@ -1,18 +1,19 @@
-import ReactMarkdown from "react-markdown";
+
 import remarkGfm from "remark-gfm";
 import Tags from "../components/ui/Tags";
 
+import MDEditor from "@uiw/react-md-editor";
+
 export default function BlogPage() {
-    const blog = {
-        title: "React: A JavaScript Library for Building User Interfaces",
-        createdAt: "06/07/2025",
-        author: "Bakshidevs",
-        excerpt: "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of their applications efficiently. React's virtual DOM and component-based architecture make it a popular choice for modern web development.",
-        tags: ["JavaScript", "React", "Web Development"],
-        slug: "react-js-library",
-        image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        content: `
-# React: A JavaScript Library for Building User Interfaces
+  const blog = {
+    title: "React: A JavaScript Library for Building User Interfaces",
+    createdAt: "06/07/2025",
+    author: "Bakshidevs",
+    excerpt: "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of their applications efficiently. React's virtual DOM and component-based architecture make it a popular choice for modern web development.",
+    tags: ["JavaScript", "React", "Web Development"],
+    slug: "react-js-library",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    content: `
 
 ## Table of Contents
 
@@ -189,32 +190,31 @@ React has redefined how we build web applications. Its declarative, component-dr
 
 Happy coding! ⚛️
 `,
-        readingTime: "5 min read",
-        isFeatured: true,
-        isPublished: true,
-        isDraft: false,
-        isArchived: false,
-    }
-    return (
-        <div className="my-12 w-full">
-            <img aria-label="blog-thumbani" className="h-56 w-full object-center object-cover" src={blog.image} alt={blog.title} />
-            <div aria-label="blog-body" className="w-2/3 mx-auto my-12">
-                <h2 className="font-bold text-3xl">{blog.title}</h2>
-                <p className="text-secondary/60 dark:text-primary/60 text-sm mt-2">
-                    {new Date(blog.createdAt).toLocaleDateString()} by {blog.author} - {blog.readingTime}
-                </p>
-                <p className="text-secondary/60 dark:text-primary/60 mt-4">{blog.excerpt}</p>
-                <div className="mt-6 prose">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {blog.content}
-                    </ReactMarkdown>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-4">
-                    {blog.tags.map((tag, index) => (
-                        <Tags key={index} tag={tag} />
-                    ))}
-                </div>
-            </div>
+    readingTime: "5 min read",
+    isFeatured: true,
+    isPublished: true,
+    isDraft: false,
+    isArchived: false,
+  }
+  return (
+    <div className="my-12 w-full">
+      <img aria-label="blog-thumbani" className="h-56 w-full object-center object-cover" src={blog.image} alt={blog.title} />
+      <div aria-label="blog-body" className="w-2/3 mx-auto my-12">
+        <h2 className="font-bold text-3xl">{blog.title}</h2>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {blog.tags.map((tag, index) => (
+            <Tags key={index} tag={tag} />
+          ))}
         </div>
-    )
+        <p className="text-secondary/60 dark:text-primary/60 text-sm mt-2">
+          {new Date(blog.createdAt).toLocaleDateString()} by {blog.author} - {blog.readingTime}
+        </p>
+        <p className="text-secondary/60 dark:text-primary/60 mt-4">{blog.excerpt}</p>
+        <div className="mt-6 prose">
+          <MDEditor.Markdown className="prose text-red-600" remarkPlugins={[remarkGfm]} source={blog.content} />
+        </div>
+
+      </div>
+    </div>
+  )
 }
