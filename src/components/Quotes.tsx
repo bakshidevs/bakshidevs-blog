@@ -17,10 +17,12 @@ export default function Quotes() {
     }, [])
     return (
         <div aria-label="quote-container" className="h-full hidden md:flex justify-center items-center border-r-1 border-olive">
-            <div className="w-4/5">
-                <p className="text-2xl text-accent">{quote?.text}</p>
-                <p className="text-right text-xl font-medium text-olive">- {quote?.author}</p>
-            </div>
+            {quote && (
+                <div className="w-4/5">
+                    <p className="text-2xl text-accent">{quote?.text}</p>
+                    <p className="text-right text-xl font-medium text-olive">- {quote?.author}</p>
+                </div>
+            )}
         </div>
     )
 }

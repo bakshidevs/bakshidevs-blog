@@ -61,8 +61,9 @@ export default function Signup() {
       <p className="w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
         Sign up to join our community and start sharing your own articles and insights.
       </p>
-      <div className="xs:w-80 w-96 border border-accent dark:border-olive p-4 rounded-lg">
-        <h2 className="flex font-medium gap-2"><CoffeeIcon /> Sign Up</h2>
+      <div className="xs:w-80 w-96 border border-accent bg-accent/10 p-4 rounded-lg">
+        <h2 className="flex font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign Up</h2>
+        <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
         <form aria-label="signup-form" className="">
           <Field className="relative">
             <Label htmlFor="name">Name</Label>
@@ -103,7 +104,7 @@ export default function Signup() {
               type={showPassword ? "text" : "password"}
             />
             <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowPassword(prev => !prev)}>
-              {!showPassword ? <Eye /> : <EyeClosed />}
+              {!showPassword ? <Eye className="text-accent" /> : <EyeClosed className="text-accent" />}
             </button>
           </Field>
           <Field className="relative">
@@ -119,7 +120,7 @@ export default function Signup() {
               type={showConfirmPassword ? "text" : "password"}
             />
             <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowConfirmPassword(prev => !prev)}>
-              {!showConfirmPassword ? <Eye /> : <EyeClosed />}
+              {!showConfirmPassword ? <Eye className="text-accent" /> : <EyeClosed className="text-accent" />}
             </button>
           </Field>
           <button disabled={isLoading} type="submit" onClick={handleSignup} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
