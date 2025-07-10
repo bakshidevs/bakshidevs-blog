@@ -1,5 +1,5 @@
 import Tags from "./ui/Tags"
-import type { BlogType } from "../pages/AllBlogs"
+import type { BlogType } from "../store/blogStore"
 
 export default function BlogCard({ blog }: { blog: BlogType }) {
     
@@ -24,7 +24,7 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
     
 
     return (
-        <div className="group rounded-md w-88 overflow-hidden transition border border-accent bg-accent/10">
+        <div className="group rounded-md w-72 md:w-80 overflow-hidden transition border border-accent bg-accent/10 shadow-2xl hover:shadow-accent">
             <div className="overflow-hidden">
                 <img
                     className="rounded-t-md max-h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 overflow-hidden"
@@ -41,7 +41,7 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
                 <h2 className="text-2xl font-bold mt-4">{blog.title}</h2>
                 <p className="text-sm text-secondary/60 dark:text-primary mt-2">{blog.excerpt}</p>
                 <div className="flex justify-between items-center mt-4">
-                    <span className="text-xs text-secondary/60 dark:text-primary">{new Date(blog.createdAt).toLocaleDateString()}</span>
+                    <span className="text-xs text-secondary/60 dark:text-primary">{blog.createdAt}</span>
                     <span className="text-xs text-secondary/60 dark:text-primary">{blog.readingTime}</span>
                 </div>
             </div>
