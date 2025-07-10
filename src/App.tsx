@@ -1,23 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
 // importing global layout component
-import Layout from "./Layout";
+import Layout from "./Layout.tsx";
 
 // importing pages/routes
-import Index from "./pages/Index";
-import LoginPage from "./pages/LoginPage";
-import NotFound from "./NotFound";
+import Index from "./pages/Index.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import NotFound from "./NotFound.tsx";
 
 // protected routes
-import ProtectedRoute from "./components/ProtectedRoute";
-import Write from "./pages/Write";
-import Profile from "./pages/Profile";
-import SignupPage from "./pages/SignupPage";
-import LoggedOutProtectedRoute from "./components/LoggedOutProtectedRoute";
-import Settings from "./pages/Settings";
-import BlogPage from "./pages/BlogPage";
-import Dashboard from "./pages/Dashboard";
-import AllBlogs from "./pages/AllBlogs";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Write from "./pages/Write.tsx";
+import Profile from "./pages/Profile.tsx";
+import SignupPage from "./pages/SignupPage.tsx";
+import LoggedOutProtectedRoute from "./components/LoggedOutProtectedRoute.tsx";
+import Settings from "./pages/Settings.tsx";
+import BlogPage from "./pages/BlogPage.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import AllBlogs from "./pages/AllBlogs.tsx";
+import QuotePage from "./pages/QuotePage.tsx";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="quote" element={<QuotePage />}/>
           <Route path="/blogs" element={<AllBlogs />} />
           <Route path="/blog/:slug" element={<BlogPage />} />
           <Route element={<LoggedOutProtectedRoute />}>

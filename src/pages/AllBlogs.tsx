@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import BlogCard from "../components/BlogCard";
+import BlogCard from "../components/BlogCard.tsx";
 
-import { type BlogType } from "../store/blogStore";
+import { type BlogType } from "../store/blogStore.ts";
 
 export const allBlogs: BlogType[] = [
     {

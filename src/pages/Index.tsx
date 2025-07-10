@@ -1,17 +1,22 @@
 
 import { NotebookPen } from "lucide-react";
-import BlogCard from "../components/BlogCard";
 import { Link } from "react-router";
-
-import useAuthStore from "../store/authStore";
+import useAuthStore from "../store/authStore.ts";
+import FeaturedPost from "../components/FeaturedPost.tsx";
+import { allBlogs } from "./AllBlogs.tsx";
+import PopularBlogsSection from "../components/PopularBlogsSection.tsx";
 
 export default function Index() {
-    const { isAuthenticated } = useAuthStore();
+    const { isAuthenticated, user } = useAuthStore();
+    const post = allBlogs[0]
     return (
-        <div className="flex relative flex-col items-center justify-center h-full">
-            <BlogCard />
-            {isAuthenticated && (
-                <Link to="/write" className="fixed bottom-16 right-4 p-2 bg-accent/20 dark:bg-secondary/20 rounded-full hover:bg-accent/30 dark:hover:bg-secondary/30 transition-colors">
+        <div className="h-full mx-auto my-12 w-[90vw] sm:w-[80vw] md:w-[60vw]">
+            <FeaturedPost
+                featuredPost={post}
+            />
+            <PopularBlogsSection />
+            {isAuthenticated && user?.labels[0] === "admin" && (
+                <Link to="/write" className="fixed bottom-12 right-12 p-3 hover:bg-accent/60 rounded-full bg-accent transition-colors">
                     <NotebookPen />
                 </Link>
             )}

@@ -1,9 +1,9 @@
 import MDEditor from '@uiw/react-md-editor';
 import { useState } from 'react';
 import remarkGfm from 'remark-gfm';
-import useThemeStore from '../store/themeStore';
-import useBlogStore from '../store/blogStore';
-import useAuthStore from '../store/authStore';
+import useThemeStore from '../store/themeStore.ts';
+import useBlogStore from '../store/blogStore.ts';
+import useAuthStore from '../store/authStore.ts';
 
 interface EditorBlogDraft {
     title: string;
@@ -11,6 +11,8 @@ interface EditorBlogDraft {
     tags: string[];
     content: any;
 }
+
+// #TODO: Figure out a way to fix this page styling along with the Markdown editor or find replacement
 
 export default function TextEditor() {
     const [blog, setBlog] = useState<EditorBlogDraft>({
@@ -54,13 +56,13 @@ export default function TextEditor() {
     return (
         <div className="h-full relative">
             <h1 className="font-bold text-3xl mt-6 mb-2">Create a New Post</h1>
-            <p className=""></p>
+            <p className="mb-6">Enrich people with knowledge.</p>
             <MDEditor
                 value={editorValue}
                 onChange={setEditorValue}
                 style={{
-                    minHeight: "90%",
-                    backgroundColor: theme === "light" ? "#fff" : "#0d1117",
+                    minHeight: "600px",
+                    backgroundColor: theme === "light" ? "transparent" : "#0d1117",
                     color: theme === "light" ? "#000" : "#FAF4ED",
                     // color: "#FAF4ED"
                 }}
@@ -72,7 +74,8 @@ export default function TextEditor() {
                     }
                 }}
             />
-            <div className="flex gap-4 font-medium absolute bottom-8 right-8">
+            <div className="h-100 bg-accent/10 w-full"></div>
+            <div className="flex gap-4 font-medium fixed bottom-12 right-8">
                 <button className="hover:bg-olive/80 bg-olive active:scale-105 transition-all duration-200 px-2 py-1 rounded-md">Save to Drafts</button>
                 <button className="px-2 py-1 rounded-md bg-accent hover:bg-accent/80 active:scale-105 transition-all duration-200">Post</button>
             </div>

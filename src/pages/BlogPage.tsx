@@ -1,10 +1,10 @@
 
 import remarkGfm from "remark-gfm";
-import Tags from "../components/ui/Tags";
+import Tags from "../components/ui/Tags.tsx";
 
 import MDEditor from "@uiw/react-md-editor";
-import useBlogStore from "../store/blogStore";
-import LoadingScreen from "../components/LoadingScreen";
+import useBlogStore from "../store/blogStore.ts";
+import LoadingScreen from "../components/LoadingScreen.tsx";
 // import { allBlogs } from "./AllBlogs";
 
 export default function BlogPage() {

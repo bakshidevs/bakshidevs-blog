@@ -1,7 +1,7 @@
 import type { Models } from 'appwrite';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { account, ID } from '../lib/appwrite';
+import { account, ID } from '../lib/appwrite.ts';
 
 
 

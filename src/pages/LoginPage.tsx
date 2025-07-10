@@ -1,5 +1,5 @@
-import Login from "../components/Login"
-import Quotes from "../components/Quotes"
+import Login from "../components/Login.tsx"
+import Quotes from "../components/Quotes.tsx"
 
 export default function LoginPage() {
   return (

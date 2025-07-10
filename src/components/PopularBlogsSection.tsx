@@ -1,5 +1,5 @@
-import { allBlogs } from "../pages/AllBlogs"
-import BlogCard from "./BlogCard"
+import { allBlogs } from "../pages/AllBlogs.tsx"
+import BlogCard from "./BlogCard.tsx"
 
 export default function PopularBlogsSection() {
     return (

@@ -1,5 +1,5 @@
-import Tags from "./ui/Tags"
-import type { BlogType } from "../store/blogStore"
+import Tags from "./ui/Tags.tsx"
+import type { BlogType } from "../store/blogStore.ts"
 
 export default function BlogCard({ blog }: { blog: BlogType }) {
     
@@ -27,7 +27,7 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
         <div className="group rounded-md w-72 md:w-80 overflow-hidden transition border border-accent bg-accent/10 shadow-2xl hover:shadow-accent">
             <div className="overflow-hidden">
                 <img
-                    className="rounded-t-md max-h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 overflow-hidden"
+                    className="rounded-t-md max-h-64 aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105 overflow-hidden"
                     src={blog.image}
                     alt=""
                 />
