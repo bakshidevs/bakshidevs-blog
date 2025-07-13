@@ -18,7 +18,7 @@ export default function Quotes() {
     return (
         <div aria-label="quote-container" className="h-full hidden md:flex justify-center items-center">
             {quote && (
-                <div className="w-4/5">
+                <div className="w-4/5 lg:w-1/3">
                     <p className="text-2xl text-accent">{quote?.text}</p>
                     <p className="text-right text-xl font-medium text-olive">- {quote?.author}</p>
                 </div>

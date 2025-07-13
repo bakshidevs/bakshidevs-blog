@@ -1,9 +1,9 @@
 import Quotes from "../components/Quotes.tsx"
 
-export default function QuotePage() {
+export default function StoicQuotePage() {
   return (
-    <div className="w-2/3">
+    <>
         <Quotes />
-    </div>
+    </>
   )
 }

@@ -18,7 +18,7 @@ import Settings from "./pages/Settings.tsx";
 import BlogPage from "./pages/BlogPage.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import AllBlogs from "./pages/AllBlogs.tsx";
-import QuotePage from "./pages/QuotePage.tsx";
+import StoicQuotePage from "./pages/StoicQuotePage.tsx";
 
 export default function App() {
   return (
@@ -26,7 +26,7 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="quote" element={<QuotePage />}/>
+          <Route path="stoic-quote" element={<StoicQuotePage />}/>
           <Route path="/blogs" element={<AllBlogs />} />
           <Route path="/blog/:slug" element={<BlogPage />} />
           <Route element={<LoggedOutProtectedRoute />}>
