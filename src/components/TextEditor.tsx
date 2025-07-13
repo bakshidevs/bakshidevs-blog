@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import useThemeStore from '../store/themeStore.ts';
 import useBlogStore from '../store/blogStore.ts';
 import useAuthStore from '../store/authStore.ts';
+import useMDEditorStore from '../store/editorStore.ts';
 
 interface EditorBlogDraft {
     title: string;
@@ -32,7 +33,7 @@ export default function TextEditor() {
     const { theme } = useThemeStore()
     const { createBlog } = useBlogStore();
     const { user } = useAuthStore()
-    const [editorValue, setEditorValue] = useState<string | undefined>("# Start here")
+    const { editorValue, setEditorValue } = useMDEditorStore();
     const handleCreateBlog = () => {
         try {
             createBlog({
@@ -63,14 +64,14 @@ export default function TextEditor() {
                 style={{
                     minHeight: "600px",
                     backgroundColor: theme === "light" ? "transparent" : "#0d1117",
-                    color: theme === "light" ? "#000" : "#FAF4ED",
+                    color: theme === "light" ? "#000" : "#B4637A",
                     // color: "#FAF4ED"
                 }}
                 previewOptions={{
                     remarkPlugins: [remarkGfm],
                     style: {
                         backgroundColor: theme === "light" ? "#f1f1f1" : "#0d1117",
-                        color: theme === "light" ? "#c1c1c1" : "#FAF4ED",
+                        color: theme === "light" ? "#c1c1c1" : "#B4637A",
                     }
                 }}
             />
