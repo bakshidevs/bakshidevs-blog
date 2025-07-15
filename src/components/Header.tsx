@@ -24,7 +24,7 @@ export default function Header() {
     <header aria-label="header" className="border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 shadow-2xl max-w-screen">
       <div className="flex items-center gap-2">
         <Link to="/">
-          <CoffeeIcon className="w-8 h-8" />
+          <CoffeeIcon className="w-8 h-8 coffee" />
         </Link>
         <div className="">
           <Link to="/">

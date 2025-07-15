@@ -17,7 +17,7 @@ export default function BlogPage() {
   return currentBlog ? (
     <div className="my-12 w-full">
       <img aria-label="blog-thumbani" className="h-56 w-full object-center object-cover" src={currentBlog.image} alt={currentBlog.title} />
-      <div aria-label="blog-body" className="w-2/3 mx-auto my-12">
+      <div aria-label="blog-body" className="md:w-2/3 p-8 mx-auto my-12">
         <h2 className="font-bold text-3xl">{currentBlog.title}</h2>
         <div className="flex flex-wrap gap-2 mt-4">
           {currentBlog.tags.map((tag, index) => (
