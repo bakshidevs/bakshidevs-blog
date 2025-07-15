@@ -19,6 +19,7 @@ import BlogPage from "./pages/BlogPage.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import AllBlogs from "./pages/AllBlogs.tsx";
 import StoicQuotePage from "./pages/StoicQuotePage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 
 export default function App() {
   return (
@@ -26,18 +27,19 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="stoic-quote" element={<StoicQuotePage />}/>
-          <Route path="/blogs" element={<AllBlogs />} />
-          <Route path="/blog/:slug" element={<BlogPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="stoic-quote" element={<StoicQuotePage />} />
+          <Route path="blogs" element={<AllBlogs />} />
+          <Route path="blog/:slug" element={<BlogPage />} />
           <Route element={<LoggedOutProtectedRoute />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<SignupPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<SignupPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="/write" element={<Write />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="write" element={<Write />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="dashboard" element={<Dashboard />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
