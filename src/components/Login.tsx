@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router";
 
 // importing authStore
 import useAuthStore from "../store/authStore";
+import { notify } from "./ui/Toast";
 
 // form data type
 type FormData = {
@@ -46,7 +47,7 @@ export default function Login() {
         e.preventDefault();
         // validate form data
         if (!formData.email || !formData.password) {
-            alert("Please fill in all fields.");
+            notify.warning("Please fill in all fields.");
             return;
         }
 
@@ -60,7 +61,7 @@ export default function Login() {
             navigate('/');
         } else {
             // show error message if login failed
-            alert("Login failed. Please check your credentials and try again.");
+            notify.error("Login failed. Please check your credentials and try again.");
         }
 
     }

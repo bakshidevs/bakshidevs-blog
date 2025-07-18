@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 // importing authStore
 import useAuthStore from "../store/authStore";
+import { notify } from "./ui/Toast";
 
 type FormData = {
   name: string;
@@ -38,18 +39,18 @@ export default function Signup() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      alert("Please fill in all fields.");
+      notify.warning("Please fill in all fields.");
       return;
     }
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
+      notify.error("Passwords do not match.");
       return;
     }
     const { success } = await signup({email: formData.email, password: formData.password, fullname: formData.name });
     if (success) {
       navigate('/');
     } else {
-      alert("Signup failed. Please try again.");
+      notify.error("Signup failed. Please try again.");
     }
   };
 

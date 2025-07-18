@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router";
+import { ToastContainer } from "react-toastify";
+import useThemeStore from "./store/themeStore";
 
 // importing global layout component
 import Layout from "./Layout.tsx";
@@ -20,14 +22,17 @@ import Dashboard from "./pages/Dashboard.tsx";
 import AllBlogs from "./pages/AllBlogs.tsx";
 import StoicQuotePage from "./pages/StoicQuotePage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
+import ImageUpload from "./pages/ImageUpload.tsx";
 
 export default function App() {
+  const { isDarkModeEnabled } = useThemeStore();
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="image" element={<ImageUpload />} />
           <Route path="stoic-quote" element={<StoicQuotePage />} />
           <Route path="blogs" element={<AllBlogs />} />
           <Route path="blog/:slug" element={<BlogPage />} />
@@ -44,6 +49,18 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={isDarkModeEnabled ? "dark" : "light"}
+      />
     </BrowserRouter>
   )
 }
