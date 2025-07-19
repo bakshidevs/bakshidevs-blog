@@ -23,6 +23,8 @@ import AllBlogs from "./pages/AllBlogs.tsx";
 import StoicQuotePage from "./pages/StoicQuotePage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import ImageUpload from "./pages/ImageUpload.tsx";
+import PostedBlogs from "./pages/profile/PostedBlogs.tsx";
+import DraftBlogs from "./pages/profile/DraftBlogs.tsx";
 
 export default function App() {
   const { isDarkModeEnabled } = useThemeStore();
@@ -42,7 +44,12 @@ export default function App() {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="write" element={<Write />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="edit/:slug" element={<Write />} />
+            <Route path="profile" element={<Profile />}>
+              <Route index element={<PostedBlogs />} />
+              <Route path="posted" element={<PostedBlogs />} />
+              <Route path="drafts" element={<DraftBlogs />} />
+            </Route>
             <Route path="settings" element={<Settings />} />
             <Route path="dashboard" element={<Dashboard />} />
           </Route>
