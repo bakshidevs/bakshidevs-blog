@@ -25,7 +25,7 @@ export default function BlogPage() {
           ))}
         </div>
         <p className="text-secondary/60 dark:text-primary/60 text-sm mt-2">
-          {new Date(currentBlog.createdAt).toLocaleDateString()} by {currentBlog.author} - {currentBlog.readingTime}
+          {currentBlog.createdAt} by {currentBlog.author} - {currentBlog.readingTime}
         </p>
         <p className="text-secondary/60 dark:text-primary/60 mt-4">{currentBlog.excerpt}</p>
         <div className="mt-6 prose">
