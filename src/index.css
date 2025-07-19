@@ -19,28 +19,25 @@
         box-sizing: border-box;
     }
 
-    button {
+    body::-webkit-scrollbar {
+        display: none;
+        font-family: 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    }
+
+    button, input {
         cursor: pointer;
     }
 
-    /* Markdown content styles */
-    .wmde-markdown {
-        @apply p-6;
-    }
 
-    .wmde-markdown::after {
-        background-color: aliceblue;
-    }
-
-    /* .wmde-markdown-color {
-        @apply bg-red-900;
-        
-    } */
 }
 
 @layer components {
+    .coffee {
+        @apply fill-base;
+    }
+
     .styled-scrollbar::-webkit-scrollbar {
-        height: 8px;
+        height: 0px;
     }
 
     .styled-scrollbar::-webkit-scrollbar-thumb {
@@ -52,5 +49,34 @@
     .styled-scrollbar::-webkit-scrollbar-track {
         background: transparent;
     }
+
+    /* Markdown content styles */
+    .wmde-markdown>ul>li {
+        list-style-type: disc;
+    }
+
+    .wmde-markdown>ol>li {
+        list-style-type: decimal;
+    }
+
+    .wmde-markdown img {
+        @apply !max-w-80 md:!max-w-125 rounded-md !block my-6 mx-auto;
+    }
+
+    /* .wmde-markdown {
+        @apply p-12;
+    } */
+
+    .wmde-markdown-color {
+        @apply !bg-inherit dark:!text-primary !text-secondary;
+
+    }
+    .language-markdown {
+        @apply !w-full;
+    }
+
+    /* .wmde-markdown-color > pre {
+        @apply !bg-inherit;
+    } */
 
 }

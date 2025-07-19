@@ -167,9 +167,9 @@ export default function AllBlogs() {
                 </div>
             </div>
             <div className="flex gap-6 flex-wrap my-16 justify-center">
-                {allBlogs.map((blog, index) => (
+                {allBlogs.map((blog) => (
                     <Link key={blog.slug} to={`/blog/${blog.slug}`}>
-                        <BlogCard key={index} blog={blog} />
+                        <BlogCard blog={blog} />
                     </Link>
                 ))}
             </div>

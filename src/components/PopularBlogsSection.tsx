@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import { allBlogs } from "../pages/AllBlogs.tsx"
 import BlogCard from "./BlogCard.tsx"
 
@@ -9,9 +10,11 @@ export default function PopularBlogsSection() {
                 <button className="px-2 py-1 bg-primary hover:bg-accent hover:text-primary transition-all duration-300 font-medium rounded-md">View All</button>
             </div>
             <div className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-6 styled-scrollbar">
-                {allBlogs.slice(1, 8).map((blog) => (
+                {allBlogs.slice(1, 4).map((blog) => (
                     <div key={blog.slug} className="flex-none snap-center">
-                        <BlogCard blog={blog} />
+                        <Link to={`/blog/${blog.slug}`}>
+                            <BlogCard blog={blog} />
+                        </Link>
                     </div>
                 ))}
             </div>
