@@ -1,9 +1,9 @@
-import TextEditor from "../components/TextEditor.tsx";
+import TextEditor from "../components/TextEditor";
 
 export default function Write() {
-  return (
-    <div className="h-full">
-      <TextEditor />
-    </div>
-  )
+    return (
+        <div>
+            <TextEditor />
+        </div>
+    );
 }
