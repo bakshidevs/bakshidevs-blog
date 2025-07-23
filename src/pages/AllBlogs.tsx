@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import BlogCard from "../components/BlogCard.tsx";
 
-import { type BlogType } from "../store/blogStore.ts";
+import useBlogStore, { type BlogType } from "../store/blogStore.ts";
 
 export const allBlogs: BlogType[] = [
     {
@@ -156,7 +156,12 @@ export const allBlogs: BlogType[] = [
     }
 ];
 
+
+
 export default function AllBlogs() {
+
+    const { blogs } = useBlogStore();
+
 
     return (
         <div>
@@ -166,8 +171,8 @@ export default function AllBlogs() {
                     <p className="text-base">Insights, tutorials, and discussions on web development, programming, and technology.</p>
                 </div>
             </div>
-            <div className="flex gap-6 flex-wrap my-16 justify-center">
-                {allBlogs.map((blog) => (
+            <div className="mx-auto w-4/5 md:w-3/4 xl:w-2/3 flex gap-6 flex-wrap my-16 justify-center">
+                {(blogs.length > 0 ? blogs : allBlogs).map((blog) => (
                     <Link key={blog.slug} to={`/blog/${blog.slug}`}>
                         <BlogCard blog={blog} />
                     </Link>
