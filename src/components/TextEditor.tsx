@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router';
 import useThemeStore from '../store/themeStore.ts';
 import useBlogStore, { type BlogType } from '../store/blogStore.ts';
 import useAuthStore from '../store/authStore.ts';
-import { UploadCloud } from 'lucide-react';
+import { UploadCloud, X } from 'lucide-react';
 
 export default function TextEditor() {
     const { slug } = useParams<{ slug: string }>();
@@ -16,12 +16,10 @@ export default function TextEditor() {
 
     const [blog, setBlog] = useState<Partial<BlogType>>({
         title: '',
-        slug: '',
         tags: [],
         content: '',
         image: '',
-        isPublished: false,
-        isDraft: false,
+        status: "",
     });
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 
@@ -71,11 +69,11 @@ export default function TextEditor() {
             isDraft,
         };
 
-        if (slug) {
-            await updateBlog(slug, blogData);
-        } else {
-            await createBlog(blogData);
-        }
+        // if (slug) {
+        //     await updateBlog(slug, blogData);
+        // } else {
+        //     await createBlog(slug, blogData);
+        // }
         navigate('/profile');
     };
 
@@ -100,12 +98,24 @@ export default function TextEditor() {
                         placeholder="Tags (comma-separated)..."
                     />
                     <div className="bg-accent/10 mb-3 rounded-md flex justify-center items-center p-4">
-                        <label htmlFor="blog-thumbnail" className="rounded-md border-2 border-dotted border-accent flex flex-col items-center p-8 cursor-pointer">
-                            <UploadCloud />
-                            <p className="text-accent font-semibold">Click to browse or drag & drop</p>
-                            <p className="text-sm text-secondary/50 dark:text-primary/50">PNG, JPG, GIF</p>
-                            <input id="blog-thumbnail" className="hidden" type="file" onChange={handleThumbnailChange} />
-                        </label>
+                        {thumbnailFile ? (
+                            <div className="relative">
+                                <img
+                                    src={URL.createObjectURL(thumbnailFile)}
+                                    alt={blog.title}
+                                />
+                                <button className="absolute top-0 right-0 bg-red-500 rounded-md" onClick={() => setThumbnailFile(null)}>
+                                    <X />
+                                </button>
+                            </div>
+                        ) : (
+                            <label htmlFor="blog-thumbnail" className="rounded-md border-2 border-dotted border-accent flex flex-col items-center p-8 cursor-pointer">
+                                <UploadCloud />
+                                <p className="text-accent font-semibold">Click to browse or drag & drop</p>
+                                <p className="text-sm text-secondary/50 dark:text-primary/50">PNG, JPG, GIF</p>
+                                <input id="blog-thumbnail" className="hidden" type="file" onChange={handleThumbnailChange} />
+                            </label>
+                        )}
                     </div>
                 </div>
                 <MDEditor
