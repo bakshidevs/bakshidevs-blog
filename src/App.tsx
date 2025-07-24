@@ -22,9 +22,9 @@ import Dashboard from "./pages/Dashboard.tsx";
 import AllBlogs from "./pages/AllBlogs.tsx";
 import StoicQuotePage from "./pages/StoicQuotePage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
-import ImageUpload from "./pages/ImageUpload.tsx";
 import PostedBlogs from "./pages/profile/PostedBlogs.tsx";
 import DraftBlogs from "./pages/profile/DraftBlogs.tsx";
+import AdminOnly from "./components/AdminOnly.tsx";
 
 export default function App() {
   const { isDarkModeEnabled } = useThemeStore();
@@ -34,7 +34,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="image" element={<ImageUpload />} />
           <Route path="stoic-quote" element={<StoicQuotePage />} />
           <Route path="blogs" element={<AllBlogs />} />
           <Route path="blog/:slug" element={<BlogPage />} />
@@ -43,15 +42,17 @@ export default function App() {
             <Route path="register" element={<SignupPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="write" element={<Write />} />
             <Route path="edit/:slug" element={<Write />} />
             <Route path="profile" element={<Profile />}>
-              <Route index element={<PostedBlogs />} />
+              {/* <Route index element={<Profile />} /> */}
               <Route path="posted" element={<PostedBlogs />} />
               <Route path="drafts" element={<DraftBlogs />} />
             </Route>
             <Route path="settings" element={<Settings />} />
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route element={<AdminOnly />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="write" element={<Write />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
