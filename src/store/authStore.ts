@@ -19,6 +19,7 @@ type AuthActions = {
     login: ({ email, password }: { email: string, password: string }) => Promise<{ success: boolean }>;
     logout: () => Promise<void>;
     globalLogout: () => Promise<void>;
+    addUsername: (username: string) => Promise<void>;
     // deleteAccount: () => Promise<void>;
 }
 
@@ -74,6 +75,16 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 set({ isLoading: false });
             }
         },
+        addUsername: async (username) => {
+            try {
+                await account.updatePrefs({
+                    username,
+                })
+            } catch (error) {
+                console.error("Error adding username:", error);
+            }
+        }
+        ,
         logout: async () => {
             try {
                 await account.deleteSession('current');
@@ -93,15 +104,6 @@ const useAuthStore = create<AuthState & AuthActions>()(
 
             }
         },
-        // deleteAccount: async() => {
-        //     try {
-        //         await account.delete();
-        //         set({ user: null, isAuthenticated: false, isLoading: false });
-        //     } catch (error) {
-        //         console.error("Error deleting account:", error);
-
-        //     }
-        // }
     }),
         {
             name: "auth-storage",
