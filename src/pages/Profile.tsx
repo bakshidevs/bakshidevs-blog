@@ -1,10 +1,12 @@
 
-import { LogOut } from "lucide-react";
+import { Image, LogOut } from "lucide-react";
 import useAuthStore from "../store/authStore";
 import { Link, Outlet, useLocation } from "react-router";
 import defaultProfile from "../assets/defaultProfile.jpg";
+import { useState } from "react";
 
 export default function Profile() {
+    const [profilePicture, setProfilePicture] = useState<File | null>(null);
     const { user, logout } = useAuthStore();
     const location = useLocation();
 
@@ -14,11 +16,37 @@ export default function Profile() {
             : "border-transparent text-secondary/70 dark:text-primary/50 hover:text-secondary dark:hover:text-primary";
     };
 
+    const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setProfilePicture(e.target.files[0]);
+            // const url = await uploadProfilePicture(e.target.files[0]);
+            // await updateUser({ prefs: { profilePicture: url } });
+        }
+    }
+
     return (
         <div className="flex flex-col items-center w-full gap-8 p-4 md:p-8">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-2xl">
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent">
-                    <img src={user?.prefs.profilePicture || defaultProfile} alt="profile" className="w-full h-full object-cover" />
+                <div className="w-32 h-32 relative overflow-hidden">
+                    <img
+                        src={
+                            profilePicture
+                                ? URL.createObjectURL(profilePicture)
+                                : user?.prefs.profilePicture || defaultProfile
+                        }
+                        alt="profile"
+                        className="-z-1 w-full h-full object-cover rounded-full border-4 border-accent"
+                    />
+                    <label htmlFor="profile-picture-upload">
+                        <Image className="w-8 h-8 bg-accent absolute bottom-0 right-0 p-1 rounded z-10" />
+                        <input
+                            id="profile-picture-upload"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleProfilePictureUpload}
+                        />
+                    </label>
                 </div>
                 <div className="text-center md:text-left">
                     <h1 className="text-3xl font-bold flex items-center gap-2">
@@ -28,7 +56,7 @@ export default function Profile() {
                         <p className="text-lg text-secondary/70 dark:text-accent font-medium">@{user?.prefs.username}</p>
                     )}
                     <p className="text-lg text-secondary/70 dark:text-primary/50">{user?.email}</p>
-                    
+
                 </div>
                 <button onClick={logout} className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors mt-4 md:mt-0 md:ml-auto">
                     <LogOut className="w-5 h-5" />
