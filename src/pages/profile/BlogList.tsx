@@ -13,7 +13,7 @@ export default function BlogList({ blogs, title }: BlogListProps) {
     return (
         <div>
             <h2 className="text-2xl font-bold mb-4">{title}</h2>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-4 gap-3">
                 {blogs.map((blog) => (
                     <div  className="relative">
                         <Link key={blog.$id} to={`/blog/${blog.$id}`}>
