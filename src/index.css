@@ -8,6 +8,8 @@
     --color-secondary: #2F2A25;
     --color-accent: #B4637A;
     --color-olive: #7F8B49;
+    ---breakpoint-xs: 20rem;
+    --breakpoint-3xl: 128rem;
 }
 
 /* @container {
