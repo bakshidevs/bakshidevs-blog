@@ -6,7 +6,7 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
 
 
     return (
-        <div className="group rounded-md w-72 md:w-80 overflow-hidden transition-all duration-300 hover:scale-103 border border-accent bg-accent/10 hover:shadow-2xl dark:hover:shadow-accent">
+        <div className="group rounded-md w-auto h-full overflow-hidden transition-all duration-300 hover:scale-103 border border-accent bg-accent/10 hover:shadow-2xl dark:hover:shadow-accent">
             <div className="overflow-hidden">
                 <img
                     className="rounded-t-md max-h-64 aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105 overflow-hidden"
