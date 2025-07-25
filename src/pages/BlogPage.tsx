@@ -5,14 +5,13 @@ import Tags from "../components/ui/Tags.tsx";
 import MDEditor from "@uiw/react-md-editor";
 import useBlogStore from "../store/blogStore.ts";
 import LoadingScreen from "../components/LoadingScreen.tsx";
-// import { allBlogs } from "./AllBlogs";
+import { useParams } from "react-router";
 
 export default function BlogPage() {
-  const { currentBlog } = useBlogStore()
-
-  // if (!currentBlog) {
-  //   currentBlog = allBlogs[0]
-  // }
+  const { currentBlog } = useBlogStore();
+  const param = useParams();
+  console.log(param.slug);
+  
 
   return currentBlog ? (
     <div className="my-12 w-full">
@@ -25,7 +24,7 @@ export default function BlogPage() {
           ))}
         </div>
         <p className="text-secondary/60 dark:text-primary/60 text-sm mt-2">
-          {currentBlog.createdAt} by {currentBlog.author} - {currentBlog.readingTime}
+          {new Date(currentBlog.createdAt).toLocaleDateString()} by {currentBlog.author} - {currentBlog.readingTime}
         </p>
         <p className="text-secondary/60 dark:text-primary/60 mt-4">{currentBlog.excerpt}</p>
         <div className="mt-6 prose">
