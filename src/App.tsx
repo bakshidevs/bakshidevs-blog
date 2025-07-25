@@ -25,6 +25,7 @@ import ContactPage from "./pages/ContactPage.tsx";
 import PostedBlogs from "./pages/profile/PostedBlogs.tsx";
 import DraftBlogs from "./pages/profile/DraftBlogs.tsx";
 import AdminOnly from "./components/AdminOnly.tsx";
+import SavedBlogs from "./pages/profile/SavedBlogs.tsx";
 
 export default function App() {
   const { isDarkModeEnabled } = useThemeStore();
@@ -47,6 +48,7 @@ export default function App() {
               {/* <Route index element={<Profile />} /> */}
               <Route path="posted" element={<PostedBlogs />} />
               <Route path="drafts" element={<DraftBlogs />} />
+              <Route path="saved" element={<SavedBlogs />} />
             </Route>
             <Route path="settings" element={<Settings />} />
             <Route element={<AdminOnly />}>

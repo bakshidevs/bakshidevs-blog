@@ -54,11 +54,11 @@ export default function TextEditor() {
         setBlog((prev) => ({ ...prev, content: value }));
     };
 
-    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setThumbnailFile(e.target.files[0]);
-        }
-    };
+    // const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files) {
+    //         setThumbnailFile(e.target.files[0]);
+    //     }
+    // };
 
     const handleSave = async (isDraft: boolean) => {
         let thumbnailUrl = blog.image;

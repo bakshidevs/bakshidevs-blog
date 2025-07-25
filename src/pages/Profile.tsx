@@ -71,6 +71,9 @@ export default function Profile() {
                     <Link to="/profile/drafts" className={`py-4 px-2 border-b-2 font-medium transition-colors ${getLinkClass("/profile/drafts")}`}>
                         Drafts
                     </Link>
+                    <Link to="/profile/saved" className={`py-4 px-2 border-b-2 font-medium transition-colors ${getLinkClass("/profile/saved")}`}>
+                        Saved
+                    </Link>
                 </div>
                 <div className="p-4">
                     <Outlet />
