@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import useThemeStore from "../store/themeStore"
 import { CoffeeIcon, LogOut, Menu, Moon, SunDim, User, X } from "lucide-react";
 import useAuthStore from "../store/authStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { toggleTheme, isDarkModeEnabled } = useThemeStore();
@@ -15,7 +15,6 @@ export default function Header() {
   ];
   const profileMenuItems = [
     { name: "Profile", path: "/profile" },
-    { name: "Dashboard", path: "/dashboard" },
     { name: "Settings", path: "/settings" },
 
   ]
@@ -24,6 +23,10 @@ export default function Header() {
     setProfileMenuOpen(false);
     setMobileMenuOpen(false);
   }
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <header aria-label="header" className="relative border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 shadow-2xl max-w-screen">
@@ -78,6 +81,19 @@ export default function Header() {
                           </NavLink>
                         </li>
                       ))}
+                      {user?.labels.includes("admin") && (
+                        <li
+                          onClick={closeMenus}
+                          className="px-4 py-2 hover:bg-secondary/10 dark:hover:bg-primary/20 rounded transition-colors"
+                        >
+                          <NavLink to="/dashboard" className="block w-full text-left text-secondary dark:text-primary">
+                            Dashboard
+                          </NavLink>
+                        </li>
+                      )}
+                      <li>
+                        <hr className="my-2 border-secondary/10 dark:border-primary/10" />
+                      </li>
                       <li className="px-4 py-2 hover:bg-secondary/10 dark:hover:bg-primary/20 rounded transition-colors">
                         <button onClick={() => { logout(); closeMenus(); }} className="flex items-center gap-2 w-full text-left text-secondary dark:text-primary">
                           <LogOut className="w-4 h-4" /> Logout

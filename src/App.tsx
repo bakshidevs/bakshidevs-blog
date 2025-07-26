@@ -45,9 +45,11 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="edit/:slug" element={<Write />} />
             <Route path="profile" element={<Profile />}>
-              {/* <Route index element={<Profile />} /> */}
-              <Route path="posted" element={<PostedBlogs />} />
-              <Route path="drafts" element={<DraftBlogs />} />
+              {/* admin only routes */}
+              <Route element={<AdminOnly />}>
+                <Route path="posted" element={<PostedBlogs />} />
+                <Route path="drafts" element={<DraftBlogs />} />
+              </Route>
               <Route path="saved" element={<SavedBlogs />} />
             </Route>
             <Route path="settings" element={<Settings />} />
