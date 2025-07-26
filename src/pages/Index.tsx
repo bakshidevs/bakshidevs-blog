@@ -12,7 +12,7 @@ export default function Index() {
     const random = Math.floor(Math.random() * blogs.length);
     const post = blogs[random];
     return (
-        <div className="h-full mx-auto my-12 w-[90vw] md:w-[80vw] xl:w-[60vw]">
+        <div className="mx-auto my-12 w-[90vw] md:w-[80vw] xl:w-[60vw]">
             <FeaturedPost
                 featuredPost={post}
             />
