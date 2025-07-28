@@ -26,9 +26,16 @@ import PostedBlogs from "./pages/profile/PostedBlogs.tsx";
 import DraftBlogs from "./pages/profile/DraftBlogs.tsx";
 import AdminOnly from "./components/AdminOnly.tsx";
 import SavedBlogs from "./pages/profile/SavedBlogs.tsx";
+import { useEffect } from "react";
+import useBlogStore from "./store/blogStore.ts";
 
 export default function App() {
   const { isDarkModeEnabled } = useThemeStore();
+  const { getAllBlogs } = useBlogStore();
+  useEffect(() => {
+    // document.title = "BakshiDevs Blog!";
+    getAllBlogs();
+  }, [])
   return (
     <BrowserRouter>
       <Layout>
