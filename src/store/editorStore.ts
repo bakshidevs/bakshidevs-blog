@@ -3,21 +3,35 @@ import { persist } from "zustand/middleware";
 
 type State = {
     blogTitle: string;
+    thumbnailURL: string | undefined;
+    slug: string | undefined;
+    tags: string[];
     editorValue: string | undefined;
 }
 
 type Action = {
-    setBlogTitle: (title: string | undefined) => void,
+    setStateValue: ({ name, value }: { name: string, value: string }) => void,
+    generateSlug: () => void;
     setEditorValue: (editorValue: string | undefined) => void;
 }
 
-const useMDEditorStore = create<State & Action>()(
-    persist((set) => (
+const useEditorStore = create<State & Action>()(
+    persist((set, get) => (
         {
-            blogTitle: "Beginning from the End",
-            editorValue: "# Start here",
-            setBlogTitle: (blogTitle: string | undefined) => {
-                set({ blogTitle })
+            blogTitle: "Blog Title Goes Here",
+            thumbnailURL: "",
+            slug: "",
+            tags: [],
+            editorValue: "## Start here",
+            setStateValue: ({ name, value }: { name: string, value: string }) => {
+                set({
+                    [name]: value
+                })
+            },
+            generateSlug: () => {
+                const { blogTitle } = get();
+                const blogSlug = blogTitle.replace(/\s+/g, '-').toLowerCase().replace(/[^\w-]+/g, '');
+                set({ slug: blogSlug });
             },
             setEditorValue: (editorValue: string | undefined) => {
                 set({ editorValue })
@@ -29,4 +43,4 @@ const useMDEditorStore = create<State & Action>()(
     )
 )
 
-export default useMDEditorStore;
+export default useEditorStore;
