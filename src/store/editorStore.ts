@@ -10,6 +10,7 @@ type State = {
     blogTitle: string;
     thumbnailURL: string | undefined;
     slug: string | undefined;
+    excerpt: string;
     tags: string[];
     editorValue: string | undefined;
 }
@@ -27,6 +28,7 @@ const useEditorStore = create<State & Action>()(
             blogTitle: "Blog Title Goes Here",
             thumbnailURL: "",
             slug: "",
+            excerpt: "",
             tags: [],
             editorValue: "## Start here",
             setStateValue: ({ name, value }: { name: string, value: string[] | string }) => {
