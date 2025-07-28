@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+// interface ThumbnailProps {
+//     thumbnail: string | undefined;
+//     thumbnailID: string | undefined;
+// }
+
 type State = {
     blogTitle: string;
     thumbnailURL: string | undefined;
@@ -10,9 +15,10 @@ type State = {
 }
 
 type Action = {
-    setStateValue: ({ name, value }: { name: string, value: string }) => void,
+    setStateValue: ({ name, value }: { name: string, value: string | string[] }) => void,
     generateSlug: () => void;
     setEditorValue: (editorValue: string | undefined) => void;
+    resetValue: () => void;
 }
 
 const useEditorStore = create<State & Action>()(
@@ -23,7 +29,7 @@ const useEditorStore = create<State & Action>()(
             slug: "",
             tags: [],
             editorValue: "## Start here",
-            setStateValue: ({ name, value }: { name: string, value: string }) => {
+            setStateValue: ({ name, value }: { name: string, value: string[] | string }) => {
                 set({
                     [name]: value
                 })
@@ -35,6 +41,15 @@ const useEditorStore = create<State & Action>()(
             },
             setEditorValue: (editorValue: string | undefined) => {
                 set({ editorValue })
+            },
+            resetValue: () => {
+                set({
+                    blogTitle: "Blog Title Goes Here",
+                    thumbnailURL: "",
+                    slug: "",
+                    tags: [],
+                    editorValue: "## Start here"
+                });
             }
         }),
         {
