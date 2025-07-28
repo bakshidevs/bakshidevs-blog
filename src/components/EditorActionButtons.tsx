@@ -2,6 +2,7 @@ import useBlogStore from "../store/blogStore";
 import useEditorStore from "../store/editorStore";
 import { type BlogType } from "../store/blogStore";
 import useAuthStore from "../store/authStore";
+import { useNavigate } from "react-router";
 
 export default function EditorActionButtons({
     onSaveDraft,
@@ -11,14 +12,16 @@ export default function EditorActionButtons({
     isEdit: boolean;
 }) {
     const { createBlog } = useBlogStore();
-    const { blogTitle, thumbnailURL, slug, tags, editorValue, resetValue } = useEditorStore();
+    const { blogTitle, thumbnailURL, slug, tags, excerpt, editorValue, resetValue } = useEditorStore();
     const { user } = useAuthStore();
+
+    const navigate = useNavigate();
 
     const handleCreateBlog = async () => {
         const blogData: Partial<BlogType> = {
             title: blogTitle,
             slug: slug,
-            excerpt: editorValue?.slice(0, 160) + '...',
+            excerpt: excerpt,
             content: editorValue,
             image: thumbnailURL,
             tags,
@@ -32,7 +35,9 @@ export default function EditorActionButtons({
             readingTime: editorValue ? Math.ceil(editorValue.split(' ').length / 200) : 0,
         }
         if (blogData && slug) {
-            createBlog(blogData);
+            await createBlog(blogData);
+            navigate(`/blog/${slug}`);
+            resetValue();
         }
     }
 
