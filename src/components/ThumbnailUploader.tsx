@@ -1,32 +1,48 @@
-import { UploadCloud, X } from 'lucide-react';
+import { Check, UploadCloud, X } from 'lucide-react';
+
+import { type ThumbnailProps } from './TextEditor';
 
 export default function ThumbnailUploader({
-  thumbnailFile,
-  setThumbnailFile,
+  thumbnail,
+  thumbnailURL,
+  setThumbnail,
+  handleThumbnailUpload,
   title
 }: {
-  thumbnailFile: File | null;
-  setThumbnailFile: (file: File | null) => void;
+  thumbnail: ThumbnailProps;
+  thumbnailURL?: string;
+  setThumbnail: (thumbnail: ThumbnailProps, showButtons?: boolean) => void;
+  handleThumbnailUpload: () => void;
   title: string;
 }) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setThumbnailFile(e.target.files[0]);
+      setThumbnail({
+        thumbnailFile: e.target.files[0],
+        showButtons: true
+      });
     }
   };
 
   return (
     <div className="bg-accent/10 mb-3 rounded-md flex justify-center items-center p-4">
-      {thumbnailFile ? (
-        <div className="relative">
-          <img src={URL.createObjectURL(thumbnailFile)} alt={title} />
-          <button
-            className="absolute top-0 right-0 bg-red-500 hover:bg-red-600 p-1 rounded-md"
-            onClick={() => setThumbnailFile(null)}
-          >
-            <X />
-          </button>
+      {thumbnail.thumbnailFile ? (
+        <div className="relative flex gap-3">
+          <img className="max-h-96" src={URL.createObjectURL(thumbnail.thumbnailFile)} alt={title} />
+          <div className="flex flex-col justify-between">
+            <button onClick={handleThumbnailUpload} className="bg-green-500 hover:bg-green-600 p-1 rounded-md">
+              <Check />
+            </button>
+            <button
+              className="bg-red-500 hover:bg-red-600 p-1 rounded-md"
+              onClick={() => setThumbnail({ thumbnailFile: null, showButtons: false })}
+            >
+              <X />
+            </button>
+          </div>
         </div>
+      ) : thumbnailURL ? (
+        <img className="max-h-96" src={thumbnailURL} alt={title} />
       ) : (
         <label htmlFor="blog-thumbnail" className="rounded-md border-2 border-dotted border-accent flex flex-col items-center p-8 cursor-pointer">
           <UploadCloud />

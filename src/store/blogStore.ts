@@ -188,8 +188,8 @@ const useBlogStore = create<BlogStore>()(
                 try {
                     const response = await storage.createFile(conf.appwriteBucketId, ID.unique(), file);
                     const fileId = response.$id;
-                    const previewUrl = storage.getFilePreview(conf.appwriteBucketId, fileId);
-                    return previewUrl.toString();
+                    const previewUrl = storage.getFileView(conf.appwriteBucketId, fileId);
+                    return previewUrl;
                 } catch (error) {
                     console.error("Upload failed :: Appwrite :: ", error);
                 }

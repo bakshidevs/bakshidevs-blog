@@ -11,6 +11,11 @@ import ThumbnailUploader from './ThumbnailUploader.tsx';
 import EditorActionButtons from './EditorActionButtons.tsx';
 import GenerateSlug from './GenerateSlug.tsx';
 
+export interface ThumbnailProps {
+    thumbnailFile: File | null;
+    showButtons: boolean;
+}
+
 export default function TextEditor() {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
@@ -22,11 +27,16 @@ export default function TextEditor() {
         title: '',
         tags: [],
         content: '',
+        excerpt: '',
         image: '',
         status: "",
     });
+    // generating slug
     const blogSlug = blog.title?.replace(/\s+/g, '-').toLowerCase().replace(/[^\w-]+/g, '');
-    const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+    const [thumbnail, setThumbnail] = useState<ThumbnailProps>({
+        thumbnailFile: null,
+        showButtons: false,
+    });
 
     useEffect(() => {
         if (slug) {
@@ -39,36 +49,53 @@ export default function TextEditor() {
             setBlog(currentBlog);
         }
     }, [currentBlog, slug]);
+    useEffect(() => {
+        if (blog.content) {
+            setBlog(prevBlog => ({
+                ...prevBlog,
+                excerpt: blog.content ? blog.content.slice(0, 160) + '...' : '',
+                readingTime: blog.content ? Math.ceil(blog.content.split(' ').length / 200) : 0,
+                createdAt: new Date().toISOString(),
+                updatedAt: blog.createdAt,
+            }))
+        }
+    }, [blog.content])
 
+    // updating title of the blog
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setBlog((prev) => ({ ...prev, [name]: value }));
     };
 
+    // updating tags of the blog
     const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setBlog((prev) => ({ ...prev, tags: value.split(',').map(tag => tag.trim()) }));
     };
 
+    // updating mdeditor content of the blog
     const handleContentChange = (value?: string) => {
         setBlog((prev) => ({ ...prev, content: value }));
     };
-
-    // const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     if (e.target.files) {
-    //         setThumbnailFile(e.target.files[0]);
-    //     }
-    // };
+    // uploading thumbnail and adding link to the blog
+    const handleThumbnailUpload = async () => {
+        let thumbnailUrl;
+        if (thumbnail.thumbnailFile) {
+            thumbnailUrl = await uploadThumbnail(thumbnail.thumbnailFile);
+        }
+        if (thumbnailUrl) {
+            setBlog((prev) => ({ ...prev, image: thumbnailUrl }));
+        }
+        setThumbnail({ thumbnailFile: null, showButtons: false });
+    }
 
     const handleSave = async (isDraft: boolean) => {
-        let thumbnailUrl = blog.image;
-        if (thumbnailFile) {
-            thumbnailUrl = await uploadThumbnail(thumbnailFile);
-        }
+
+
 
         const blogData = {
             ...blog,
-            thumbnail: thumbnailUrl,
+            image: blog.image,
             author: user?.$id,
             isPublished: !isDraft,
             isDraft,
@@ -92,13 +119,13 @@ export default function TextEditor() {
                     <BlogTitleInput value={blog.title!} onChange={handleInputChange} />
                     <GenerateSlug value={blogSlug || ''} />
                     <BlogTagsInput value={blog.tags?.join(', ') || ''} onChange={handleTagsChange} />
-                    <ThumbnailUploader thumbnailFile={thumbnailFile} setThumbnailFile={setThumbnailFile} title={blog.title!} />
+                    <ThumbnailUploader handleThumbnailUpload={handleThumbnailUpload} thumbnailURL={blog?.image} thumbnail={thumbnail} setThumbnail={setThumbnail} title={blog.title!} />
                 </div>
                 <MDEditor
                     value={blog.content}
                     onChange={handleContentChange}
                     data-color-mode={theme}
-                    style={{ minHeight: '650px'}}
+                    style={{ minHeight: '650px' }}
                     previewOptions={{ remarkPlugins: [remarkGfm] }}
                 />
             </div>
