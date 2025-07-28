@@ -16,7 +16,7 @@ export default function BlogList({ blogs, title }: BlogListProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-4 gap-3">
                 {blogs.map((blog) => (
                     <div key={blog.slug} className="relative">
-                        <Link to={`/blog/${blog.$id}`}>
+                        <Link to={`/blog/${blog.slug}`}>
                             <BlogCard blog={blog} />
                         </Link>
                         <Link to={`/edit/${blog.slug}`} className="text-md absolute top-2 right-4 text-accent hover: hover:text-primary hover:underline mt-2 inline-block font-bold">Edit</Link>

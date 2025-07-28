@@ -8,6 +8,7 @@
     --color-secondary: #2F2A25;
     --color-accent: #B4637A;
     --color-olive: #7F8B49;
+	--color-code: #161b22;
     ---breakpoint-xs: 20rem;
     --breakpoint-3xl: 128rem;
 }
@@ -65,20 +66,17 @@
         @apply !max-w-80 md:!max-w-125 rounded-md !block my-6 mx-auto;
     }
 
-    /* .wmde-markdown {
-        @apply p-12;
-    } */
-
     .wmde-markdown-color {
         @apply !bg-inherit dark:!text-primary !text-secondary;
 
     }
+
+	.wmde-markdown-color > pre {
+		@apply !bg-accent/15 dark:!bg-code;
+	}
+
     .language-markdown {
         @apply !w-full;
     }
-
-    /* .wmde-markdown-color > pre {
-        @apply !bg-inherit;
-    } */
 
 }
