@@ -10,6 +10,7 @@ export default function BlogTitleInput() {
       onClick={(e) => e.currentTarget.select()}
       name="blogTitle"
       placeholder="Enter your blog title..."
+      maxLength={256}
     />
   );
 }

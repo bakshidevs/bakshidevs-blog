@@ -11,7 +11,7 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
                 <img
                     className="rounded-t-md max-h-64 aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105 overflow-hidden"
                     src={blog.image}
-                    alt=""
+                    alt={blog.slug}
                 />
             </div>
             <div className="p-6">
