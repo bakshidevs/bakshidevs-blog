@@ -49,6 +49,7 @@ const useEditorStore = create<State & Action>()(
                     blogTitle: "Blog Title Goes Here",
                     thumbnailURL: "",
                     slug: "",
+                    excerpt: "",
                     tags: [],
                     editorValue: "## Start here"
                 });

@@ -1,112 +1,27 @@
 import MDEditor from '@uiw/react-md-editor';
 import remarkGfm from 'remark-gfm';
-import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import useThemeStore from '../store/themeStore.ts';
-import useBlogStore, { type BlogType } from '../store/blogStore.ts';
-import useAuthStore from '../store/authStore.ts';
 import BlogTitleInput from './BlogTitleInput.tsx';
 import BlogTagsInput from './BlogTagsInput.tsx';
 import ThumbnailUploader from './ThumbnailUploader.tsx';
 import EditorActionButtons from './EditorActionButtons.tsx';
 import GenerateSlug from './GenerateSlug.tsx';
+import useEditorStore from '../store/editorStore.ts';
+import BlogExcerpt from './BlogExcerpt.tsx';
 
-export interface ThumbnailProps {
-    thumbnailFile: File | null;
-    showButtons: boolean;
-}
+
 
 export default function TextEditor() {
+    const { editorValue, setEditorValue } = useEditorStore();
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const { theme } = useThemeStore();
-    const { createBlog, updateBlog, getBlogBySlug, uploadThumbnail, currentBlog } = useBlogStore();
-    const { user } = useAuthStore();
 
-    const [blog, setBlog] = useState<Partial<BlogType>>({
-        title: '',
-        tags: [],
-        content: '',
-        excerpt: '',
-        image: '',
-        status: "",
-    });
-    // generating slug
-    const blogSlug = blog.title?.replace(/\s+/g, '-').toLowerCase().replace(/[^\w-]+/g, '');
-    const [thumbnail, setThumbnail] = useState<ThumbnailProps>({
-        thumbnailFile: null,
-        showButtons: false,
-    });
-
-    useEffect(() => {
-        if (slug) {
-            getBlogBySlug(slug);
-        }
-    }, [slug, getBlogBySlug]);
-
-    useEffect(() => {
-        if (currentBlog && slug) {
-            setBlog(currentBlog);
-        }
-    }, [currentBlog, slug]);
-    useEffect(() => {
-        if (blog.content) {
-            setBlog(prevBlog => ({
-                ...prevBlog,
-                excerpt: blog.content ? blog.content.slice(0, 160) + '...' : '',
-                readingTime: blog.content ? Math.ceil(blog.content.split(' ').length / 200) : 0,
-                createdAt: new Date().toISOString(),
-                updatedAt: blog.createdAt,
-            }))
-        }
-    }, [blog.content])
-
-    // updating title of the blog
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setBlog((prev) => ({ ...prev, [name]: value }));
-    };
-
-    // updating tags of the blog
-    const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setBlog((prev) => ({ ...prev, tags: value.split(',').map(tag => tag.trim()) }));
-    };
-
-    // updating mdeditor content of the blog
-    const handleContentChange = (value?: string) => {
-        setBlog((prev) => ({ ...prev, content: value }));
-    };
-    // uploading thumbnail and adding link to the blog
-    const handleThumbnailUpload = async () => {
-        let thumbnailUrl;
-        if (thumbnail.thumbnailFile) {
-            thumbnailUrl = await uploadThumbnail(thumbnail.thumbnailFile);
-        }
-        if (thumbnailUrl) {
-            setBlog((prev) => ({ ...prev, image: thumbnailUrl }));
-        }
-        setThumbnail({ thumbnailFile: null, showButtons: false });
-    }
 
     const handleSave = async (isDraft: boolean) => {
 
-
-
-        const blogData = {
-            ...blog,
-            image: blog.image,
-            author: user?.$id,
-            isPublished: !isDraft,
-            isDraft,
-        };
-
-        if (slug) {
-            await updateBlog(slug, blogData);
-        }
-        if (!slug && user && blogSlug) {
-            await createBlog(blogSlug, blogData);
-        }
+        console.log(isDraft);
         navigate('/profile');
     };
 
@@ -116,20 +31,22 @@ export default function TextEditor() {
             <p className="mb-6">Enrich people with knowledge.</p>
             <div className="mb-16">
                 <div className="grid gap-4">
-                    <BlogTitleInput value={blog.title!} onChange={handleInputChange} />
-                    <GenerateSlug value={blogSlug || ''} />
-                    <BlogTagsInput value={blog.tags?.join(', ') || ''} onChange={handleTagsChange} />
-                    <ThumbnailUploader handleThumbnailUpload={handleThumbnailUpload} thumbnailURL={blog?.image} thumbnail={thumbnail} setThumbnail={setThumbnail} title={blog.title!} />
+                    <BlogTitleInput />
+                    <GenerateSlug />
+                    <BlogTagsInput />
+                    <BlogExcerpt />
+                    <ThumbnailUploader />
                 </div>
                 <MDEditor
-                    value={blog.content}
-                    onChange={handleContentChange}
+                    value={editorValue}
+                    onChange={setEditorValue}
                     data-color-mode={theme}
                     style={{ minHeight: '650px' }}
                     previewOptions={{ remarkPlugins: [remarkGfm] }}
+                    preview='edit'
                 />
             </div>
-            <EditorActionButtons onSaveDraft={() => handleSave(true)} onPublish={() => handleSave(false)} isEdit={!!slug} />
+            <EditorActionButtons onSaveDraft={() => handleSave(true)} isEdit={!!slug} />
         </div>
     );
 }
