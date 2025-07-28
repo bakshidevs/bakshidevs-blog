@@ -20,11 +20,12 @@ type AuthActions = {
     logout: () => Promise<void>;
     globalLogout: () => Promise<void>;
     addUsername: (username: string) => Promise<void>;
+    uploadProfilePicture: (imageURL: string) => Promise<void>;
     // deleteAccount: () => Promise<void>;
 }
 
 const useAuthStore = create<AuthState & AuthActions>()(
-    persist((set) => ({
+    persist((set, get) => ({
         isLoading: false,
         isAuthenticated: false,
         user: null,
@@ -77,14 +78,36 @@ const useAuthStore = create<AuthState & AuthActions>()(
         },
         addUsername: async (username) => {
             try {
+                const { user } = get();
+                const prevPrefs = user?.prefs
+                if (!prevPrefs) {
+                    console.error("No previous preferences found.");
+                    return;
+                }
                 await account.updatePrefs({
-                    username,
-                })
+                    ...prevPrefs,
+                    username
+                });
             } catch (error) {
                 console.error("Error adding username:", error);
             }
-        }
-        ,
+        },
+        uploadProfilePicture: async (imageURL) => {
+            try {
+                const { user } = get();
+                const prevPrefs = user?.prefs
+                if (!prevPrefs) {
+                    console.error("No previous preferences found.");
+                    return;
+                }
+                await account.updatePrefs({
+                    ...prevPrefs,
+                    profilePicture: imageURL,
+                });
+            } catch (error) {
+                console.error("Error uploading profile image:", error);
+            }
+        },
         logout: async () => {
             try {
                 await account.deleteSession('current');

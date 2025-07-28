@@ -3,11 +3,12 @@ import { Image, LogOut } from "lucide-react";
 import useAuthStore from "../store/authStore";
 import { Link, Outlet, useLocation } from "react-router";
 import defaultProfile from "../assets/defaultProfile.jpg";
-import { useState } from "react";
+import useBlogStore from "../store/blogStore";
+import { useEffect } from "react";
 
 export default function Profile() {
-    const [profilePicture, setProfilePicture] = useState<File | null>(null);
-    const { user, logout } = useAuthStore();
+    const { fetchUser, user, logout, uploadProfilePicture } = useAuthStore();
+    const { uploadThumbnail } = useBlogStore();
     const location = useLocation();
 
     const getLinkClass = (path: string) => {
@@ -16,11 +17,17 @@ export default function Profile() {
             : "border-transparent text-secondary/70 dark:text-primary/50 hover:text-secondary dark:hover:text-primary";
     };
 
+    useEffect(() => {
+        fetchUser();
+    }, [])
+
     const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            setProfilePicture(e.target.files[0]);
-            // const url = await uploadProfilePicture(e.target.files[0]);
-            // await updateUser({ prefs: { profilePicture: url } });
+            const imageURL = await uploadThumbnail(e.target.files[0]);
+            if (imageURL) {
+                await uploadProfilePicture(imageURL);
+                window.location.reload();
+            }
         }
     }
 
@@ -30,14 +37,14 @@ export default function Profile() {
                 <div className="w-32 h-32 relative overflow-hidden">
                     <img
                         src={
-                            profilePicture
-                                ? URL.createObjectURL(profilePicture)
-                                : user?.prefs.profilePicture || defaultProfile
+                            user?.prefs.profilePicture
+                                ? user?.prefs.profilePicture
+                                : defaultProfile
                         }
                         alt="profile"
                         className="-z-1 w-full h-full object-cover rounded-full border-4 border-accent"
                     />
-                    <label htmlFor="profile-picture-upload">
+                    <label htmlFor="profile-picture-upload" className="cursor-pointer">
                         <Image className="w-8 h-8 bg-accent absolute bottom-0 right-0 p-1 rounded z-10" />
                         <input
                             id="profile-picture-upload"
