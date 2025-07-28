@@ -1,6 +1,7 @@
 import { Link } from "react-router"
 import BlogCard from "./BlogCard.tsx"
 import useBlogStore from "../store/blogStore.ts"
+import LoadingScreen from "./LoadingScreen.tsx";
 
 export default function LatestBlogsSection() {
     const { blogs } = useBlogStore();
@@ -21,5 +22,5 @@ export default function LatestBlogsSection() {
                 ))}
             </div>
         </section>
-    ) : <>Hi</>
+    ) : <LoadingScreen />
 }

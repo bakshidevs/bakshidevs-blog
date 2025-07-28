@@ -5,17 +5,20 @@ import useAuthStore from "../store/authStore.ts";
 import FeaturedPost from "../components/FeaturedPost.tsx";
 import LatestBlogsSection from "../components/LatestBlogsSection.tsx";
 import useBlogStore from "../store/blogStore.ts";
+import LoadingScreen from "../components/LoadingScreen.tsx";
 
 export default function Index() {
     const { isAuthenticated, user } = useAuthStore();
-    const {blogs} = useBlogStore();
+    const { blogs, isLoading } = useBlogStore();
     const random = Math.floor(Math.random() * blogs.length);
     const post = blogs[random];
-    return (
+    return !isLoading ? (
         <div className="mx-auto my-12 w-[90vw] md:w-[80vw] xl:w-[60vw]">
-            <FeaturedPost
-                featuredPost={post}
-            />
+            {post && (
+                <FeaturedPost
+                    featuredPost={post}
+                />
+            )}
             <LatestBlogsSection />
             {isAuthenticated && user?.labels[0] === "admin" && (
                 <Link to="/write" className="fixed bottom-12 right-12 p-3 hover:bg-accent/60 rounded-full bg-accent transition-colors">
@@ -23,5 +26,7 @@ export default function Index() {
                 </Link>
             )}
         </div>
+    ) : (
+        <LoadingScreen />
     )
 }
