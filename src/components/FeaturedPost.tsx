@@ -2,11 +2,13 @@
 import { Link } from "react-router"
 import { type BlogType } from "../store/blogStore"
 import Tags from "./ui/Tags"
+import useViewport from "../hooks/useViewport"
 
 export default function FeaturedPost({ featuredPost }: { featuredPost: BlogType }) {
+    const { isMobile } = useViewport();
     return (
         <Link to={`blog/${featuredPost.slug}`}>
-            <section aria-label="featured-post" className="h-56 md:h-80 relative mx-auto rounded-md my-12 shadow-2xl hover:shadow-base dark:shadow-accent/50 dark:hover:shadow-accent hover:scale-101 duration-500">
+            <section aria-label="featured-post" className="h-64 md:h-80 relative mx-auto rounded-md my-12 shadow-2xl hover:shadow-base dark:shadow-accent/50 dark:hover:shadow-accent hover:scale-101 duration-500">
                 {featuredPost.image && (<img className="h-full w-full object-cover rounded-md" src={featuredPost.image} alt={featuredPost.slug} />)}
                 <div className="group absolute inset-0 bg-black/20 dark:bg-black/40 hover:bg-black/70 text transition-all duration-500 top-0 rounded-md">
                     <div className="absolute bottom-0 p-6 text-primary">
@@ -16,7 +18,7 @@ export default function FeaturedPost({ featuredPost }: { featuredPost: BlogType 
                                 <Tags key={index} tag={tag} />
                             ))}
                         </div>
-                        <p className="text-sm">{featuredPost.excerpt}</p>
+                        <p className="text-sm">{isMobile ? featuredPost.excerpt.slice(0, 102).trim() + "..." : featuredPost.excerpt}</p>
                         <div className="flex gap-2 items-center mt-2 text-xs">
                             <span className="">{new Date(featuredPost.createdAt).toLocaleDateString()}</span>
                             <div className="h-1 w-1 bg-primary rounded-full"></div>

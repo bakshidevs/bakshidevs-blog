@@ -4,9 +4,9 @@ import useBlogStore from "../store/blogStore.ts"
 import LoadingScreen from "./LoadingScreen.tsx";
 
 export default function LatestBlogsSection() {
-    const { blogs } = useBlogStore();
+    const { publishedBlogs } = useBlogStore();
 
-    return blogs.length > 0 ? (
+    return publishedBlogs.length > 0 ? (
         <section aria-label="popular-blogs">
             <div className="flex justify-between items-center text-accent py-3">
                 <h2 className="font-bold text-2xl">Latest Blogs</h2>
@@ -15,7 +15,7 @@ export default function LatestBlogsSection() {
                 </Link>
             </div>
             <div className="w-full grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-4 gap-3">
-                {blogs.slice(1, 5).map((blog) => (
+                {publishedBlogs.slice(1, 5).map((blog) => (
                         <Link key={blog.slug} to={`/blog/${blog.slug}`}>
                             <BlogCard blog={blog} />
                         </Link>
