@@ -7,7 +7,7 @@ import LoadingScreen from "../components/LoadingScreen.tsx";
 export default function AllBlogs() {
 
     const { blogs } = useBlogStore();
-
+    const allBlogs = blogs.filter(blog => blog.status === "published");
 
     return blogs.length > 0 ?
         <div className="mb-12">
@@ -18,7 +18,7 @@ export default function AllBlogs() {
                 </div>
             </div>
             <div className="w-4/5 md:w-3/4 xl:w-2/3 mx-auto grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-4 gap-4">
-                {blogs.map((blog) => (
+                {allBlogs.map((blog) => (
                     <Link key={blog.slug} to={`/blog/${blog.slug}`}>
                         <BlogCard blog={blog} />
                     </Link>

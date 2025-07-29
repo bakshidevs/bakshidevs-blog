@@ -10,8 +10,9 @@ import LoadingScreen from "../components/LoadingScreen.tsx";
 export default function Index() {
     const { isAuthenticated, user } = useAuthStore();
     const { blogs, isLoading } = useBlogStore();
-    const random = Math.floor(Math.random() * blogs.length);
-    const post = blogs[random];
+    const allBlogs = blogs.filter(blog => blog.status === "published");
+    const random = Math.floor(Math.random() * allBlogs.length);
+    const post = allBlogs[random];
     return !isLoading ? (
         <div className="mx-auto my-12 w-[90vw] md:w-[80vw] xl:w-[60vw]">
             {post && (
