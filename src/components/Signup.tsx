@@ -57,7 +57,7 @@ export default function Signup() {
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
       <h1 className="font-bold text-4xl m-4 w-2/3 text-center">
-        Create your Bakshidevs blog account!
+        Create your BakshiDevs Blog account!
       </h1>
       <p className="w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
         Sign up to join our community and start sharing your own articles and insights.
@@ -65,7 +65,7 @@ export default function Signup() {
       <div className="xs:w-80 w-96 border border-accent bg-accent/10 p-4 rounded-lg">
         <h2 className="flex font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign Up</h2>
         <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
-        <form aria-label="signup-form" className="">
+        <div aria-label="signup-container" className="">
           <Field className="relative">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -77,6 +77,10 @@ export default function Signup() {
               )}
               name="name"
               type="text"
+              id="name"
+              required
+              autoComplete="name"
+              placeholder="Enter your name"
             />
           </Field>
           <Field className="relative">
@@ -90,6 +94,10 @@ export default function Signup() {
               )}
               name="email"
               type="email"
+              id="email"
+              required
+              autoComplete="email"
+              placeholder="Enter your email address"
             />
           </Field>
           <Field className="relative">
@@ -103,6 +111,10 @@ export default function Signup() {
               )}
               name="password"
               type={showPassword ? "text" : "password"}
+              id="password"
+              required
+              autoComplete="current-password"
+              placeholder="Enter your password"
             />
             <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowPassword(prev => !prev)}>
               {!showPassword ? <Eye className="text-accent" /> : <EyeClosed className="text-accent" />}
@@ -119,6 +131,10 @@ export default function Signup() {
               )}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              required
+              autoComplete="current-password"
+              placeholder="Confirm your password"
             />
             <button type="button" className="absolute bottom-2 right-2" onClick={() => setShowConfirmPassword(prev => !prev)}>
               {!showConfirmPassword ? <Eye className="text-accent" /> : <EyeClosed className="text-accent" />}
@@ -127,7 +143,7 @@ export default function Signup() {
           <button disabled={isLoading} type="submit" onClick={handleSignup} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
             {isLoading ? "Signing up..." : "Sign Up"}
           </button>
-        </form>
+        </div>
         <div className="">
           <p className="mt-2 text-center">
             Already have an account? <Link to="/login" className="text-olive hover:text-accent underline">Login</Link>

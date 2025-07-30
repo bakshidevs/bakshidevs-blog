@@ -68,7 +68,7 @@ export default function Login() {
     return (
         <div className="flex flex-col items-center justify-center h-full">
             <h1 className="font-bold text-4xl mb-4 md:w-2/3 sm:w-1/2 text-center">
-                Welcome back to Bakshidevs blog!
+                Welcome back to BakshiDevs Blog!
             </h1>
             <p className="md:w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
                 Please enter your credentials to sign in and continue reading our latest articles and updates.
@@ -76,7 +76,7 @@ export default function Login() {
             <div className="xs:w-80 bg-accent/5 w-96 border border-olive dark:border-accent p-4 rounded-lg">
                 <h2 className="flex items-center underline font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign In</h2>
                 <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
-                <form aria-label="login-form" className="">
+                <div aria-label="login-container" className="flex flex-col gap-2">
                     <Field className="relative">
                         <Label htmlFor="email">Email</Label>
                         <Input
@@ -88,6 +88,8 @@ export default function Login() {
                             )}
                             name="email"
                             type="email"
+                            id="email"
+                            required
                             autoComplete="email"
                             placeholder="Enter your email address"
                         />
@@ -102,6 +104,8 @@ export default function Login() {
                                 'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25'
                             )}
                             name="password"
+                            required
+                            id="password"
                             type={showPassword ? "text" : "password"}
                             autoComplete="current-password"
                             placeholder="Enter your password"
@@ -113,7 +117,7 @@ export default function Login() {
                     <button disabled={isLoading} type="submit" onClick={handleLogin} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
                         {isLoading ? "Logging in..." : "Login"}
                     </button>
-                </form>
+                </div>
                 <div className="">
                     <p className="mt-2 text-center">
                         Doesn't have an account? <Link to="/register" className="text-olive hover:text-accent underline">Register</Link>
