@@ -46,12 +46,12 @@ const useEditorStore = create<State & Action>()(
             },
             resetValue: () => {
                 set({
-                    blogTitle: "Blog Title Goes Here",
+                    blogTitle: "",
                     thumbnailURL: "",
                     slug: "",
                     excerpt: "",
                     tags: [],
-                    editorValue: "## Start here"
+                    editorValue: "## Blog content here"
                 });
             }
         }),
