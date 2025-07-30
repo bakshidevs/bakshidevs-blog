@@ -1,11 +1,12 @@
 import BlogList from "./BlogList";
-import useAuthStore from "../../store/authStore";
 import { Link } from "react-router";
+import useBlogStore from "../../store/blogStore";
 
 export default function PostedBlogs() {
-    const { user } = useAuthStore();
-    return user?.prefs.draftedBlogs ? (
-        <BlogList blogs={user?.prefs.draftedBlogs} title="Drafts" />
+    const { publishedByAuthor } = useBlogStore();
+    
+    return publishedByAuthor.length > 0 ? (
+        <BlogList blogs={publishedByAuthor} title="Posted Blogs" />
     ) : (
         <div className="h-full w-full flex flex-col justify-center items-center">
             <h1 className="text-xl font-medium">No posted blogs yet...</h1>
