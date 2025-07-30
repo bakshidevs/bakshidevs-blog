@@ -35,7 +35,7 @@ export default function App() {
   useEffect(() => {
     // document.title = "BakshiDevs Blog!";
     getAllBlogs();
-  }, [])
+  }, [getAllBlogs])
   return (
     <BrowserRouter>
       <Layout>

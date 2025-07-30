@@ -72,13 +72,12 @@ const useBlogStore = create<BlogStore>()(
             createBlog: async (blog: Partial<BlogType>) => {
                 set({ isLoading: true });
                 try {
-                    const res = await databases.createDocument(
+                    await databases.createDocument(
                         conf.appwriteDatabaseId,
                         conf.appwriteBlogsCollectionId,
                         ID.unique(),
                         blog
                     );
-                    console.log(res);
                 } catch (error) {
                     console.error("Blog creation failure :: Appwrite :: ", error);
                 } finally {
@@ -108,7 +107,6 @@ const useBlogStore = create<BlogStore>()(
                         conf.appwriteBlogsCollectionId
                     );
                     if (response.documents) {
-                        console.log(response.documents);
                         const allBlogs = response.documents as ReturnedBlogType[];
                         set({ blogs: allBlogs, publishedBlogs: allBlogs.filter(blog => blog.status === "published"), draftedBlogs: allBlogs.filter(blog => blog.status === "draft") });
                     } else {
@@ -141,8 +139,6 @@ const useBlogStore = create<BlogStore>()(
                         );
                         if (response) {
                             set({ currentBlog: response.documents[0] as ReturnedBlogType });
-                            console.log(response.documents);
-
                         } else {
                             set({ currentBlog: null });
                         }

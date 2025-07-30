@@ -63,8 +63,6 @@ export default function EditorActionButtons() {
                 setStateValue({ name: "thumbnailURL", value: currentBlog.image });
             }
         }
-        console.log(currentBlog?.$id);
-
     }, [editBlogSlug, getBlogBySlug, resetValue, currentBlog, setStateValue, setEditorValue])
 
     // editor can move the edited blog to draft or published reprised version
@@ -81,7 +79,6 @@ export default function EditorActionButtons() {
                 readingTime: editorValue ? Math.ceil(editorValue.split(' ').length / 200) : 1,
             }
             if (currentBlog.$id) {
-                console.log(blogData);
                 await updateBlog(currentBlog.$id, blogData);
                 navigate(`/blog/${slug}`);
                 resetValue();

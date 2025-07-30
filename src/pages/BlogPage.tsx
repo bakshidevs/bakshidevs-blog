@@ -14,7 +14,6 @@ export default function BlogPage() {
   const { user } = useAuthStore();
   const { getBlogBySlug, currentBlog, isLoading, deleteBlog } = useBlogStore();
   const param = useParams();
-  console.log(currentBlog);
 
   const navigate = useNavigate();
 

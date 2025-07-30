@@ -5,7 +5,7 @@ export default function GenerateSlug() {
     const {slug, generateSlug, blogTitle } = useEditorStore();
     useEffect(() => {
         generateSlug();
-    }, [blogTitle])
+    }, [blogTitle, generateSlug])
     return (
         <input
             className="bg-accent/10 px-3 py-5 outline-0 focus:outline-1 focus:outline-accent rounded-md"
