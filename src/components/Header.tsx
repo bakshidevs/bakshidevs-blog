@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import useThemeStore from "../store/themeStore"
 import { CoffeeIcon, LogOut, Menu, Moon, SunDim, User, X } from "lucide-react";
 import useAuthStore from "../store/authStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Header() {
   const { toggleTheme, isDarkModeEnabled } = useThemeStore();
@@ -24,12 +24,8 @@ export default function Header() {
     setMobileMenuOpen(false);
   }
 
-  useEffect(() => {
-    
-  }, [])
-
   return (
-    <header aria-label="header" className="relative border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 shadow-2xl max-w-screen">
+    <header aria-label="header" className="relative border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center px-12 py-4 shadow-2xl max-w-screen">
       <div className="flex items-center gap-2">
         <Link to="/">
           <CoffeeIcon className="w-8 h-8 coffee" />
@@ -42,7 +38,7 @@ export default function Header() {
         </div>
       </div>
       {/* Desktop Navigation */}
-      <nav aria-label="navbar" className="hidden md:flex items-center gap-6">
+      <nav aria-label="navbar" className="hidden md:flex items-center gap-6 text-xl">
         <ul className="flex flex-wrap items-center gap-4">
           {navitems.map((item) => (
             <li key={item.name} className="inline-block">
@@ -60,12 +56,30 @@ export default function Header() {
                   </NavLink>
                 </li>
               )}
+              <div
+                className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1"
+                onClick={toggleTheme}
+              >
+                <span
+                  className={
+                    `absolute top-1/2 -translate-y-1/2 ${isDarkModeEnabled ? "left-1" : "left-0"} transition-all duration-300 w-5 h-5 rounded-full flex items-center justify-center shadow-md
+              ${isDarkModeEnabled ? 'translate-x-6 bg-secondary' : 'translate-x-0 bg-primary'}`
+                  }
+                >
+                  {isDarkModeEnabled ? <Moon className="w-4 h-4 text-primary" /> : <SunDim className="w-4 h-4 text-secondary" />}
+                </span>
+              </div>
               <div className="relative inline-block">
                 <button
                   onClick={() => setProfileMenuOpen(prevState => !prevState)}
-                  className="inline-flex items-center justify-center p-2 rounded-full text-secondary dark:text-primary hover:bg-secondary/10 dark:hover:bg-primary/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-secondary dark:focus:ring-offset-primary transition"
+                  className="inline-flex items-center justify-center p-2 rounded-full text-secondary dark:text-primary hover:bg-secondary/10 dark:hover:bg-primary/20 transition"
                 >
-                  <User />
+                  {user?.prefs.profilePicture ? (
+                    <img className="w-12 h-12 rounded-full object-cover border-2 border-primary" src={user?.prefs.profilePicture} alt={`${user.name} profile picture`} />
+                  ) : (
+                    <User className="w-12 h-12" />
+                  )
+                  }
                 </button>
                 {profileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-secondary rounded-xl shadow-2xl z-20 border border-secondary/10 dark:border-primary/10 animate-fade-in-up">
@@ -112,19 +126,7 @@ export default function Header() {
             </li>
           )}
         </ul>
-        <div
-          className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1"
-          onClick={toggleTheme}
-        >
-          <span
-            className={
-              `absolute top-1/2 -translate-y-1/2 ${isDarkModeEnabled ? "left-1" : "left-0"} transition-all duration-300 w-5 h-5 rounded-full flex items-center justify-center shadow-md
-              ${isDarkModeEnabled ? 'translate-x-6 bg-secondary' : 'translate-x-0 bg-primary'}`
-            }
-          >
-            {isDarkModeEnabled ? <Moon className="w-4 h-4 text-primary" /> : <SunDim className="w-4 h-4 text-secondary" />}
-          </span>
-        </div>
+
       </nav>
       {/* Mobile Navigation */}
       <div className="md:hidden flex items-center gap-2">
