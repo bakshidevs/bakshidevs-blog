@@ -2,9 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { databases, storage, ID } from "../lib/appwrite";
 import { conf } from "../conf/conf";
-import { Query } from "appwrite";
+import { Query, type Models } from "appwrite";
 
 export interface BlogType {
+    $id?: string;
     title: string;
     slug: string;
     excerpt: string;
@@ -21,8 +22,16 @@ export interface BlogType {
     isArchived: boolean;
 }
 
+type ReturnedBlogType = BlogType & Models.Document;
+
+
 type BlogState = {
     blogs: BlogType[];
+    publishedBlogs: BlogType[];
+    draftedBlogs: BlogType[];
+    allBlogsByAuthor: BlogType[];
+    publishedByAuthor: BlogType[];
+    draftedByAuthor: BlogType[];
     currentBlog: BlogType | null;
     isLoading: boolean;
 }
@@ -32,8 +41,9 @@ type BlogActions = {
     createBlog: (blog: Partial<BlogType>) => Promise<void>;
     updateBlog: (blogId: string, blog: Partial<BlogType>) => Promise<void>;
     getBlogBySlug: (blogId: string) => Promise<void>;
-    getBlogsByAuthor: (authorId: string) => Promise<void>;
     getAllBlogs: () => Promise<void>;
+    getBlogsByAuthor: (authorId: string) => Promise<void>;
+    deleteBlog: (blogId: string) => Promise<void>;
 }
 
 type BlogStore = BlogState & BlogActions;
@@ -42,6 +52,11 @@ const useBlogStore = create<BlogStore>()(
     persist(
         (set, get) => ({
             blogs: [],
+            publishedBlogs: [],
+            draftedBlogs: [],
+            allBlogsByAuthor: [],
+            publishedByAuthor: [],
+            draftedByAuthor: [],
             currentBlog: null,
             isLoading: false,
             uploadThumbnail: async (file: File) => {
@@ -94,7 +109,8 @@ const useBlogStore = create<BlogStore>()(
                     );
                     if (response.documents) {
                         console.log(response.documents);
-                        set({ blogs: response.documents as any });
+                        const allBlogs = response.documents as ReturnedBlogType[];
+                        set({ blogs: allBlogs, publishedBlogs: allBlogs.filter(blog => blog.status === "published"), draftedBlogs: allBlogs.filter(blog => blog.status === "draft") });
                     } else {
                         set({ blogs: [] });
                     }
@@ -124,7 +140,7 @@ const useBlogStore = create<BlogStore>()(
                             ]
                         );
                         if (response) {
-                            set({ currentBlog: response.documents[0] as any });
+                            set({ currentBlog: response.documents[0] as ReturnedBlogType });
                             console.log(response.documents);
 
                         } else {
@@ -146,12 +162,23 @@ const useBlogStore = create<BlogStore>()(
                         [Query.equal("author", authorId)]
                     );
                     if (response.documents) {
-                        set({ blogs: response.documents as any });
+                        const authoredBlogs = response.documents as ReturnedBlogType[];
+                        set({ allBlogsByAuthor: authoredBlogs, publishedByAuthor: authoredBlogs.filter(blog => blog.status === "published"), draftedByAuthor: authoredBlogs.filter(blog => blog.status === "draft") });
                     } else {
-                        set({ blogs: [] });
+                        set({ allBlogsByAuthor: [], publishedByAuthor: [], draftedByAuthor: [] });
                     }
                 } catch (error) {
                     console.error("Fetching user blogs failed :: Appwrite :: ", error);
+                } finally {
+                    set({ isLoading: false });
+                }
+            },
+            deleteBlog: async (blogId) => {
+                set({ isLoading: true });
+                try {
+                    await databases.deleteDocument(conf.appwriteDatabaseId, conf.appwriteBlogsCollectionId, blogId);
+                } catch (error) {
+                    console.error("Document deletion failed :: Appwrite :: ", error);
                 } finally {
                     set({ isLoading: false });
                 }
