@@ -1,7 +1,9 @@
 import MDEditor from '@uiw/react-md-editor';
 import remarkGfm from 'remark-gfm';
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import useThemeStore from '../store/themeStore.ts';
+
+// Text editor components
 import BlogTitleInput from './BlogTitleInput.tsx';
 import BlogTagsInput from './BlogTagsInput.tsx';
 import ThumbnailUploader from './ThumbnailUploader.tsx';
@@ -9,21 +11,24 @@ import EditorActionButtons from './EditorActionButtons.tsx';
 import GenerateSlug from './GenerateSlug.tsx';
 import useEditorStore from '../store/editorStore.ts';
 import BlogExcerpt from './BlogExcerpt.tsx';
+import { useEffect } from 'react';
 
 
 
 export default function TextEditor() {
-    const { editorValue, setEditorValue } = useEditorStore();
+    const { editorValue, setEditorValue, resetValue } = useEditorStore();
     const { slug } = useParams<{ slug: string }>();
-    const navigate = useNavigate();
     const { theme } = useThemeStore();
 
 
-    const handleSave = async (isDraft: boolean) => {
-
-        console.log(isDraft);
-        navigate('/profile');
-    };
+    // resets the editor value on component unmount (only when something was being edited)
+    useEffect(() => {
+        if (slug) {
+            return () => {
+                resetValue();
+            }
+        }
+    }, [resetValue, slug])
 
     return (
         <div className="h-full mx-auto relative w-4/5 md:w-3/5">
@@ -43,10 +48,10 @@ export default function TextEditor() {
                     data-color-mode={theme}
                     style={{ minHeight: '650px' }}
                     previewOptions={{ remarkPlugins: [remarkGfm] }}
-                    preview='edit'
+                    preview="edit"
                 />
             </div>
-            <EditorActionButtons onSaveDraft={() => handleSave(true)} isEdit={!!slug} />
+            <EditorActionButtons />
         </div>
     );
 }
