@@ -28,24 +28,10 @@ import AdminOnly from "./components/AdminOnly.tsx";
 import SavedBlogs from "./pages/profile/SavedBlogs.tsx";
 import { useEffect } from "react";
 import useBlogStore from "./store/blogStore.ts";
-import useAuthStore from "./store/authStore.ts";
-import { account } from "./lib/appwrite.ts";
 
 export default function App() {
   const { isDarkModeEnabled } = useThemeStore();
   const { getAllBlogs } = useBlogStore();
-  const { user } = useAuthStore();
-
-
-  // if accidentally user is set to null session should automatically get deleted
-  useEffect(() => {
-    async function handleNullUser() {
-      await account.deleteSession("current");
-    }
-    if (user === null) {
-      handleNullUser();
-    }
-  }, [user])
 
   useEffect(() => {
     // document.title = "BakshiDevs Blog!";
