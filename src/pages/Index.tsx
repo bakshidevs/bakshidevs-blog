@@ -15,9 +15,7 @@ export default function Index() {
     return !isLoading ? (
         <div className="mx-auto my-12 w-[90vw] md:w-[80vw] xl:w-[60vw]">
             {post && (
-                <FeaturedPost
-                    featuredPost={post}
-                />
+                <FeaturedPost />
             )}
             <LatestBlogsSection />
             {isAuthenticated && user?.labels[0] === "admin" && (

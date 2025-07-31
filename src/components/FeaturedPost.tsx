@@ -1,10 +1,25 @@
 
 import { Link } from "react-router"
-import { type BlogType } from "../store/blogStore"
+import useBlogStore, { type ReturnedBlogType } from "../store/blogStore"
 import Tags from "./ui/Tags"
 import useViewport from "../hooks/useViewport"
+import { latestBlogs } from "../lib/blogUtils"
 
-export default function FeaturedPost({ featuredPost }: { featuredPost: BlogType }) {
+export default function FeaturedPost() {
+
+    //
+    const { publishedBlogs } = useBlogStore();
+
+    // featuring the blog with most reading time in last seven days
+    function getFeaturedPost(blogs: ReturnedBlogType[]) {
+        if (blogs.length === 0) return null;
+
+        return blogs.reduce((maxBlog, currentBlog) => {
+            return currentBlog.readingTime > maxBlog.readingTime ? currentBlog : maxBlog;
+        });
+    }
+    const recentBlogs: ReturnedBlogType[] = latestBlogs(publishedBlogs as ReturnedBlogType[]);
+    const featuredPost = getFeaturedPost(recentBlogs)!;
     const { isMobile } = useViewport();
     return (
         <Link to={`blog/${featuredPost.slug}`}>

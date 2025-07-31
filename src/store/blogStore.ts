@@ -22,7 +22,7 @@ export interface BlogType {
     isArchived: boolean;
 }
 
-type ReturnedBlogType = BlogType & Models.Document;
+export type ReturnedBlogType = BlogType & Models.Document;
 
 
 type BlogState = {
@@ -108,7 +108,7 @@ const useBlogStore = create<BlogStore>()(
                     );
                     if (response.documents) {
                         const allBlogs = response.documents as ReturnedBlogType[];
-                        set({ blogs: allBlogs, publishedBlogs: allBlogs.filter(blog => blog.status === "published"), draftedBlogs: allBlogs.filter(blog => blog.status === "draft") });
+                        set({ blogs: allBlogs, publishedBlogs: allBlogs.filter(blog => blog.status === "published" && blog.isArchived === false), draftedBlogs: allBlogs.filter(blog => blog.status === "draft") });
                     } else {
                         set({ blogs: [] });
                     }
