@@ -9,15 +9,6 @@ export default function Header() {
   const { toggleTheme, isDarkModeEnabled } = useThemeStore();
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const navitems = [
-    { name: "Blogs", path: "/blogs" },
-    { name: "Contact", path: "/contact" },
-  ];
-  const profileMenuItems = [
-    { name: "Profile", path: "/profile" },
-    { name: "Settings", path: "/settings" },
-
-  ]
   const { isAuthenticated, user, logout } = useAuthStore();
   const closeMenus = () => {
     setProfileMenuOpen(false);
@@ -40,35 +31,42 @@ export default function Header() {
       {/* Desktop Navigation */}
       <nav aria-label="navbar" className="hidden md:flex items-center gap-6 text-xl">
         <ul className="flex flex-wrap items-center gap-4">
-          {navitems.map((item) => (
-            <li key={item.name} className="inline-block">
-              <NavLink to={item.path} className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-bold underline' : ''}`}>
-                {item.name}
+          <li className="inline-block">
+            <NavLink to="blogs" className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-medium underline' : ''}`}>
+              Blogs
+            </NavLink>
+          </li>
+          {isAuthenticated && user?.labels.includes("admin") && (
+            <li className="inline-block">
+              <NavLink to="/write" className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-medium underline' : ''}`}>
+                Write
               </NavLink>
             </li>
-          ))}
-          {isAuthenticated ? (
-            <>
-              {user?.labels.includes("admin") && (
-                <li className="inline-block">
-                  <NavLink to="/write" className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-bold underline' : ''}`}>
-                    Write
-                  </NavLink>
-                </li>
-              )}
-              <div
-                className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1"
-                onClick={toggleTheme}
-              >
-                <span
-                  className={
-                    `absolute top-1/2 -translate-y-1/2 ${isDarkModeEnabled ? "left-1" : "left-0"} transition-all duration-300 w-5 h-5 rounded-full flex items-center justify-center shadow-md
+          )}
+
+          {!isAuthenticated && (
+            <li className="inline-block">
+              <NavLink to="/login" className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-medium underline' : ''}`}>
+                Login
+              </NavLink>
+            </li>
+          )}
+          {/* theme toggle */}
+          <div
+            className="font-medium relative w-12 h-6 rounded-full bg-accent/50 dark:bg-primary/20 transition-colors duration-300 cursor-pointer flex items-center px-1"
+            onClick={toggleTheme}
+          >
+            <span
+              className={
+                `absolute top-1/2 -translate-y-1/2 ${isDarkModeEnabled ? "left-1" : "left-0"} transition-all duration-300 w-5 h-5 rounded-full flex items-center justify-center shadow-md
               ${isDarkModeEnabled ? 'translate-x-6 bg-secondary' : 'translate-x-0 bg-primary'}`
-                  }
-                >
-                  {isDarkModeEnabled ? <Moon className="w-4 h-4 text-primary" /> : <SunDim className="w-4 h-4 text-secondary" />}
-                </span>
-              </div>
+              }
+            >
+              {isDarkModeEnabled ? <Moon className="w-4 h-4 text-primary" /> : <SunDim className="w-4 h-4 text-secondary" />}
+            </span>
+          </div>
+          {isAuthenticated && (
+            <>
               <div className="relative inline-block">
                 <button
                   onClick={() => setProfileMenuOpen(prevState => !prevState)}
@@ -84,17 +82,15 @@ export default function Header() {
                 {profileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-secondary rounded-xl shadow-2xl z-20 border border-secondary/10 dark:border-primary/10 animate-fade-in-up">
                     <ul className="py-2">
-                      {profileMenuItems.map((item) => (
-                        <li
-                          onClick={closeMenus}
-                          key={item.name}
-                          className="px-4 py-2 hover:bg-secondary/10 dark:hover:bg-primary/20 rounded transition-colors"
-                        >
-                          <NavLink to={item.path} className="block w-full text-left text-secondary dark:text-primary">
-                            {item.name}
-                          </NavLink>
-                        </li>
-                      ))}
+                      <li
+                        onClick={closeMenus}
+                        className="px-4 py-2 hover:bg-secondary/10 dark:hover:bg-primary/20 rounded transition-colors"
+                      >
+                        <NavLink to="/profile" className="block w-full text-left text-secondary dark:text-primary">
+                          Profile
+                        </NavLink>
+                      </li>
+
                       {user?.labels.includes("admin") && (
                         <li
                           onClick={closeMenus}
@@ -105,6 +101,14 @@ export default function Header() {
                           </NavLink>
                         </li>
                       )}
+                      <li
+                        onClick={closeMenus}
+                        className="px-4 py-2 hover:bg-secondary/10 dark:hover:bg-primary/20 rounded transition-colors"
+                      >
+                        <NavLink to="/settings" className="block w-full text-left text-secondary dark:text-primary">
+                          Settings
+                        </NavLink>
+                      </li>
                       <li>
                         <hr className="my-2 border-secondary/10 dark:border-primary/10" />
                       </li>
@@ -118,12 +122,6 @@ export default function Header() {
                 )}
               </div>
             </>
-          ) : (
-            <li className="inline-block">
-              <NavLink to="/login" className={({ isActive }) => `hover:text-secondary dark:hover:text-primary transition-colors ${isActive ? 'font-bold underline' : ''}`}>
-                Login
-              </NavLink>
-            </li>
           )}
         </ul>
 
@@ -143,20 +141,17 @@ export default function Header() {
         <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-secondary/95 backdrop-blur-sm border-t border-secondary/20 dark:border-primary/20 shadow-lg z-50 animate-fade-in-down">
           <nav className="p-4">
             <ul className="flex flex-col gap-1">
-              {navitems.map(item => (
-                <li key={`mobile-${item.name}`}>
-                  <NavLink to={item.path} onClick={closeMenus} className={({ isActive }) => `block w-full p-3 rounded-md text-lg ${isActive ? 'bg-accent/20 font-semibold' : ''}`}>{item.name}</NavLink>
-                </li>
-              ))}
+              <li>
+                <NavLink to="blogs" onClick={closeMenus} className={({ isActive }) => `block w-full p-3 rounded-md text-lg ${isActive ? 'bg-accent/20 font-semibold' : ''}`}>Blogs</NavLink>
+              </li>
               <hr className="my-2 border-secondary/20 dark:border-primary/20" />
               {isAuthenticated ? (
                 <>
                   {user?.labels.includes("admin") && (
                     <li><NavLink to="/write" onClick={closeMenus} className={({ isActive }) => `block w-full p-3 rounded-md text-lg ${isActive ? 'bg-accent/20 font-semibold' : ''}`}>Write</NavLink></li>
                   )}
-                  {profileMenuItems.map(item => (
-                    <li key={`mobile-${item.name}`}><NavLink to={item.path} onClick={closeMenus} className={({ isActive }) => `block w-full p-3 rounded-md text-lg ${isActive ? 'bg-accent/20 font-semibold' : ''}`}>{item.name}</NavLink></li>
-                  ))}
+                  <li><NavLink to="/profile" onClick={closeMenus} className={({ isActive }) => `block w-full p-3 rounded-md text-lg ${isActive ? 'bg-accent/20 font-semibold' : ''}`}>Profile</NavLink></li>
+
                   <li><button onClick={() => { logout(); closeMenus(); }} className="flex items-center gap-2 w-full p-3 rounded-md text-lg text-red-500"><LogOut className="w-5 h-5" /> Logout</button></li>
                 </>
               ) : (
