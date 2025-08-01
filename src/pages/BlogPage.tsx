@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import NotFound from "../NotFound.tsx";
 import useAuthStore from "../store/authStore.ts";
 
+import DOMPurify from "dompurify";
+
 export default function BlogPage() {
   const { user } = useAuthStore();
   const { getBlogBySlug, currentBlog, isLoading, deleteBlog } = useBlogStore();
@@ -30,6 +32,8 @@ export default function BlogPage() {
     deleteBlog(blogId);
     navigate("/profile/drafts");
   }
+
+  const cleanContent = DOMPurify.sanitize(currentBlog?.content as string)
 
   return currentBlog && !isLoading ? (
     <div className="my-12 w-full relative">
@@ -58,7 +62,7 @@ export default function BlogPage() {
           {new Date(currentBlog.createdAt).toLocaleDateString()} by @{currentBlog.username} - {currentBlog.readingTime} mins read
         </p>
         <div className="mt-6 prose">
-          <MDEditor.Markdown className="" remarkPlugins={[remarkGfm]} source={currentBlog.content} />
+          <MDEditor.Markdown className="" remarkPlugins={[remarkGfm]} source={cleanContent} />
         </div>
       </div>
     </div>
