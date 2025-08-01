@@ -65,7 +65,7 @@ export default function Signup() {
       <div className="xs:w-80 w-96 border border-accent bg-accent/10 p-4 rounded-lg">
         <h2 className="flex font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign Up</h2>
         <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
-        <div aria-label="signup-container" className="">
+        <form aria-label="signup-form" onSubmit={handleSignup} className="">
           <Field className="relative">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -140,10 +140,10 @@ export default function Signup() {
               {!showConfirmPassword ? <Eye className="text-accent" /> : <EyeClosed className="text-accent" />}
             </button>
           </Field>
-          <button disabled={isLoading} type="submit" onClick={handleSignup} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
+          <button disabled={isLoading} type="submit" className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
             {isLoading ? "Signing up..." : "Sign Up"}
           </button>
-        </div>
+        </form>
         <div className="">
           <p className="mt-2 text-center">
             Already have an account? <Link to="/login" className="text-olive hover:text-accent underline">Login</Link>

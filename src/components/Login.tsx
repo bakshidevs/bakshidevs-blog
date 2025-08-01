@@ -73,7 +73,7 @@ export default function Login() {
             <p className="md:w-2/3 sm:w-1/2 text-center mb-6 text-secondary/60 dark:text-primary/60">
                 Please enter your credentials to sign in and continue reading our latest articles and updates.
             </p>
-            <div className="xs:w-80 bg-accent/5 w-96 border border-olive dark:border-accent p-4 rounded-lg">
+            <form onSubmit={handleLogin} className="xs:w-80 bg-accent/5 w-96 border border-olive dark:border-accent p-4 rounded-lg">
                 <h2 className="flex items-center underline font-medium gap-2 text-accent text-xl"><CoffeeIcon className="w-8 h-8" /> Sign In</h2>
                 <hr className="my-1 bg-accent/50 border-0 h-0.5 rounded-xl"/>
                 <div aria-label="login-container" className="flex flex-col gap-2">
@@ -114,7 +114,7 @@ export default function Login() {
                             {!showPassword ? <Eye /> : <EyeClosed />}
                         </button>
                     </Field>
-                    <button disabled={isLoading} type="submit" onClick={handleLogin} className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
+                    <button disabled={isLoading} type="submit" className="w-full p-2 mt-4 text-primary dark:text-secondary rounded bg-secondary hover:bg-secondary/80 font-medium dark:bg-accent dark:hover:bg-accent/80 transition-colors">
                         {isLoading ? "Logging in..." : "Login"}
                     </button>
                 </div>
@@ -123,7 +123,7 @@ export default function Login() {
                         Doesn't have an account? <Link to="/register" className="text-olive hover:text-accent underline">Register</Link>
                     </p>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
