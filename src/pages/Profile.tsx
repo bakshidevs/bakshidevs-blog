@@ -40,7 +40,8 @@ export default function Profile() {
             const imageURL = await uploadThumbnail(e.target.files[0]);
             if (imageURL) {
                 await uploadProfilePicture(imageURL);
-                window.location.reload();
+                // user fetched to show the latest update without page reload
+                fetchUser();
             }
         }
     }
