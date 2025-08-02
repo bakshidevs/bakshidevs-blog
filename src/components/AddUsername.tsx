@@ -2,9 +2,15 @@ import { Check } from 'lucide-react';
 import { useState } from 'react'
 import useAuthStore from '../store/authStore';
 
-export default function AddUsername({ setIsUsernameEditing }: { setIsUsernameEditing: (value: boolean) => void }) {
+interface AddUsernameProps {
+    isUsernameEditing: boolean;
+    setIsUsernameEditing: (value: boolean) => void;
+    existingUsername: string;
+}
+
+export default function AddUsername({ isUsernameEditing, setIsUsernameEditing, existingUsername }: AddUsernameProps) {
     const { fetchUser, addUsername } = useAuthStore();
-    const [username, setUsername] = useState<string>("");
+    const [username, setUsername] = useState<string>(isUsernameEditing ? existingUsername : "");
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsUsernameEditing(false);
