@@ -16,7 +16,7 @@ export default function Header() {
   }
 
   return (
-    <header aria-label="header" className="relative border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center px-12 py-4 shadow-2xl max-w-screen">
+    <header aria-label="header" className="relative border-0 border-secondary dark:border-primary text-secondary dark:text-primary bg-accent/50 dark:bg-accent flex justify-between items-center p-4 md:px-12 shadow-2xl max-w-screen">
       <div className="flex items-center gap-2">
         <Link to="/">
           <CoffeeIcon className="w-8 h-8 coffee" />

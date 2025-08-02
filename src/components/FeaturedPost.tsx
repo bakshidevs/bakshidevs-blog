@@ -33,7 +33,7 @@ export default function FeaturedPost() {
                                 <Tags key={index} tag={tag} />
                             ))}
                         </div>
-                        <p className="text-sm">{isMobile ? featuredPost.excerpt.slice(0, 102).trim() + "..." : featuredPost.excerpt}</p>
+                        <p className="text-sm">{isMobile ? featuredPost.excerpt.slice(0, 75).trim() + "..." : featuredPost.excerpt}</p>
                         <div className="flex gap-2 items-center mt-2 text-xs">
                             <span className="">{new Date(featuredPost.createdAt).toLocaleDateString()}</span>
                             <div className="h-1 w-1 bg-primary rounded-full"></div>

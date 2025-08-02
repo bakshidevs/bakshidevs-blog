@@ -36,7 +36,7 @@ export default function BlogPage() {
   const cleanContent = DOMPurify.sanitize(currentBlog?.content as string)
 
   return currentBlog && !isLoading ? (
-    <div className="my-12 w-full relative">
+    <div className="my-12 max-w-screen relative">
       {/* <img aria-label="blog-thumbani" className="h-56 w-full object-center object-cover" src={currentBlog.image} alt={currentBlog.title} /> */}
       {user?.labels.includes("admin") && user?.$id === currentBlog.author && (
         <div className="flex gap-3 justify-end m-0 mr-6">
@@ -50,9 +50,9 @@ export default function BlogPage() {
           </button>
         </div>
       )}
-      <div aria-label="blog-body" className="md:w-2/3 p-8 mx-auto mb-12">
+      <div aria-label="blog-body" className="md:3/4 lg:w-2/3 p-8 mx-auto mb-12">
         <h2 className="font-bold text-3xl">{currentBlog.title}</h2>
-        <img className="max-h-84 h-auto object-cover mx-auto my-4 rounded-md" src={currentBlog.image} alt={currentBlog.slug} />
+        <img className="max-h-64 md:max-h-84 h-auto object-cover mx-auto my-4 rounded-md" src={currentBlog.image} alt={currentBlog.slug} />
         <div className="flex flex-wrap gap-2 mt-4">
           {currentBlog.tags.map((tag, index) => (
             <Tags key={index} tag={tag} />
@@ -61,7 +61,7 @@ export default function BlogPage() {
         <p className="text-secondary/60 dark:text-primary/60 text-sm mt-2">
           {new Date(currentBlog.createdAt).toLocaleDateString()} by @{currentBlog.username} - {currentBlog.readingTime} mins read
         </p>
-        <div className="mt-6 prose">
+        <div className="mt-6 w-full prose">
           <MDEditor.Markdown className="" remarkPlugins={[remarkGfm]} source={cleanContent} />
         </div>
       </div>
