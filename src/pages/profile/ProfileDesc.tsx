@@ -2,20 +2,20 @@ import { LogOut } from "lucide-react";
 import AddUsername from "../../components/AddUsername";
 import { useState } from "react";
 import useAuthStore from "../../store/authStore";
-import { useNavigate } from "react-router";
-import useEditorStore from "../../store/editorStore";
+import LogOutModal from "../../components/LogOutModal";
 
 
 export default function ProfileDesc() {
-    const { user, logout } = useAuthStore();
+    // local state
     const [isUsernameEditing, setIsUsernameEditing] = useState<boolean>(false);
-    const { resetValue } = useEditorStore();
-    // once logged out user is taken to home page
-    const navigate = useNavigate();
-    const handleLogout = async () => {
-        await logout();
-        resetValue();
-        navigate("/");
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+
+    // store variables
+    const { user } = useAuthStore();
+
+    // 
+    const handleLogoutModal = () => {
+        setIsLogoutModalOpen(true);
     }
     return (
         <div className="flex flex-col justify-center">
@@ -33,10 +33,13 @@ export default function ProfileDesc() {
                 isUsernameEditing ? <AddUsername existingUsername={user?.prefs.username} isUsernameEditing={isUsernameEditing} setIsUsernameEditing={setIsUsernameEditing} /> : <button onClick={() => setIsUsernameEditing(true)} className="px-2 py-0.5 w-max bg-olive rounded-md">Add Username</button>
             )}
             <p className="text-lg text-secondary/70 dark:text-primary/50 mb-2">{user?.email}</p>
-            <button onClick={handleLogout} className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors w-max">
+            <button onClick={handleLogoutModal} className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors w-max">
                 <LogOut className="w-5 h-5" />
                 <span>Logout</span>
             </button>
+            {isLogoutModalOpen && (
+                <LogOutModal isLogoutModalOpen={isLogoutModalOpen} setIsLogoutModalOpen={setIsLogoutModalOpen} />
+            )}
         </div>
     )
 }

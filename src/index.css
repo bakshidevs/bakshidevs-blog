@@ -28,7 +28,7 @@
     }
 
     button, input {
-        cursor: pointer;
+        @apply cursor-pointer font-medium;
     }
 
 
