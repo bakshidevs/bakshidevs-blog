@@ -10,7 +10,7 @@ interface AddUsernameProps {
 
 export default function AddUsername({ isUsernameEditing, setIsUsernameEditing, existingUsername }: AddUsernameProps) {
     const { fetchUser, addUsername } = useAuthStore();
-    const [username, setUsername] = useState<string>(isUsernameEditing ? existingUsername : "");
+    const [username, setUsername] = useState<string>(isUsernameEditing && existingUsername ? existingUsername : "");
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsUsernameEditing(false);

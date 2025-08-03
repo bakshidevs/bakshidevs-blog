@@ -5,6 +5,10 @@ import useEditorStore from "../store/editorStore"
 export default function BlogExcerpt() {
     const { excerpt, setStateValue } = useEditorStore();
     const [charactersLeft, setCharactersLeft] = useState<number>(256)
+    const handleRest = () => {
+        setCharactersLeft(256);
+        setStateValue({ name: "excerpt", value: "" });
+    }
     return (
         <div className="relative">
             <textarea
@@ -19,6 +23,9 @@ export default function BlogExcerpt() {
                 maxLength={256}
                 placeholder="Write blog descript within 256 characters..."
             />
+            <button onClick={handleRest} className="absolute hover:text-accent right-4 top-2">
+                Reset
+            </button>
             <p className="absolute bottom-3 right-3">
                 {charactersLeft} characters left!
             </p>
