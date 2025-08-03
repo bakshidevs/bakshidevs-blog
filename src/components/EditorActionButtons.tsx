@@ -17,9 +17,16 @@ export default function EditorActionButtons() {
     const params = useParams<{ slug: string }>();
     const editBlogSlug = params.slug;
 
+    const isBlank = (str?: string) => !str || str.trim() === "";
+    const isEmpty = (arr: string[]) => !arr || arr.length === 0;
+
 
     // handle creation of a new blog and resets the editor after blog publishing is successful
     const handleCreateBlog = async (status: "draft" | "published") => {
+        if (isBlank(blogTitle) || isBlank(slug) || isBlank(excerpt) || isBlank(editorValue) || isEmpty(tags) || isBlank(thumbnailURL)) {
+            notify.warning("Please fill in all fields.");
+            return;
+        }
         const blogData: Partial<BlogType> = {
             title: blogTitle,
             slug: slug,
