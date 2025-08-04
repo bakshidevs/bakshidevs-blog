@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
 
 @theme {
     --color-base: #937c6c;
@@ -71,8 +72,21 @@
 
     }
 
+    
+    .wmde-markdown-color > table > thead > tr {
+        @apply light:!bg-white ;
+    }
+
+    .wmde-markdown-color > table > tbody > tr:nth-child(2n) {
+        @apply light:!bg-white;
+    }
+
+    .wmde-markdown-color > table > tbody > tr:nth-child(2n-1) {
+        @apply light:!bg-accent/10;
+    }
+
 	.wmde-markdown-color > pre {
-		@apply !bg-accent/15 dark:!bg-code;
+		@apply light:!bg-accent/15 dark:!bg-code;
 	}
 
     .language-markdown {

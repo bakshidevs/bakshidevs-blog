@@ -5,7 +5,7 @@ import { account, ID } from '../lib/appwrite.ts';
 
 
 
-type AuthState = {
+export type AuthState = {
     isLoading: boolean;
     isAuthenticated: boolean;
     user: Models.User<Models.Preferences> | null;
@@ -21,7 +21,11 @@ type AuthActions = {
     globalLogout: () => Promise<void>;
     addUsername: (username: string) => Promise<void>;
     uploadProfilePicture: (imageURL: string) => Promise<void>;
-    // deleteAccount: () => Promise<void>;
+    verifyEmail: (email: string) => Promise<void>;
+    resetPassword: (email: string) => Promise<void>;
+    forgotPassword: (email: string) => Promise<void>;
+    twoFactorAuthentication: (email: string) => Promise<void>;
+    deleteAccount: () => Promise<void>;
 }
 
 const useAuthStore = create<AuthState & AuthActions>()(
@@ -127,6 +131,35 @@ const useAuthStore = create<AuthState & AuthActions>()(
 
             }
         },
+        verifyEmail: async (email) => {
+            try {
+                console.log(email);
+            } catch (error) {
+                console.error("Error verifying email:", error);
+            }
+        },
+        resetPassword: async (email) => {
+            try {
+                console.log(email);
+            } catch (error) {
+                console.error("Error verifying email:", error);
+            }
+        },
+        forgotPassword: async (email) => {
+            try {
+                console.log(email);
+            } catch (error) {
+                console.error("Error verifying email:", error);
+            }
+        },
+        twoFactorAuthentication: async (email) => {
+            try {
+                console.log(email);
+            } catch (error) {
+                console.error("Error verifying email:", error);
+            }
+        },
+        deleteAccount: async () => { },
     }),
         {
             name: "auth-storage",
