@@ -4,6 +4,7 @@ import useBlogStore, { type ReturnedBlogType } from "../store/blogStore"
 import Tags from "./ui/Tags"
 import useViewport from "../hooks/useViewport"
 import { latestBlogs } from "../lib/blogUtils"
+import { Calendar, Clock } from "lucide-react"
 
 export default function FeaturedPost() {
 
@@ -35,9 +36,9 @@ export default function FeaturedPost() {
                         </div>
                         <p className="text-sm">{isMobile ? featuredPost.excerpt.slice(0, 75).trim() + "..." : featuredPost.excerpt}</p>
                         <div className="flex gap-2 items-center mt-2 text-xs">
-                            <span className="">{new Date(featuredPost.createdAt).toLocaleDateString()}</span>
+                            {featuredPost.createdAt && <span className="text-xs text-secondary/60 dark:text-primary flex gap-1 items-center"><Calendar className="h-4 w-4" /> {new Date(featuredPost.createdAt).toLocaleDateString()}</span>}
                             <div className="h-1 w-1 bg-primary rounded-full"></div>
-                            <span className="">{featuredPost.readingTime} min read</span>
+                            <span className="text-xs text-secondary/60 dark:text-primary flex gap-1 items-center"> <Clock className="h-4 w-4" /> {featuredPost.readingTime} min read</span>
                         </div>
                     </div>
                 </div>

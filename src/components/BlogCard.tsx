@@ -1,5 +1,6 @@
 import Tags from "./ui/Tags.tsx"
 import type { BlogType } from "../store/blogStore.ts"
+import { Calendar, Clock } from "lucide-react"
 
 export default function BlogCard({ blog }: { blog: BlogType }) {
 
@@ -23,8 +24,8 @@ export default function BlogCard({ blog }: { blog: BlogType }) {
                 <h2 className="text-2xl font-bold mt-4">{blog.title}</h2>
                 <p className="text-sm text-secondary/60 dark:text-primary mt-2">{blog.excerpt}</p>
                 <div className="flex justify-between items-center mt-4">
-                    {blog.createdAt && <span className="text-xs text-secondary/60 dark:text-primary">{new Date(blog.createdAt).toLocaleDateString()}</span>}
-                    <span className="text-xs text-secondary/60 dark:text-primary">{blog.readingTime} min read</span>
+                    {blog.createdAt && <span className="text-xs text-secondary/60 dark:text-primary flex gap-1 items-center"><Calendar className="h-4 w-4" /> {new Date(blog.createdAt).toLocaleDateString()}</span>}
+                    <span className="text-xs text-secondary/60 dark:text-primary flex gap-1 items-center"> <Clock className="h-4 w-4" /> {blog.readingTime} min read</span>
                 </div>
             </div>
         </div>
