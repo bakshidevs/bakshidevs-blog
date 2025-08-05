@@ -22,7 +22,7 @@ export default function FeaturedPost() {
     const recentBlogs: ReturnedBlogType[] = latestBlogs(publishedBlogs as ReturnedBlogType[]);
     const featuredPost = getFeaturedPost(recentBlogs)!;
     const { isMobile } = useViewport();
-    return (
+    return featuredPost ? (
         <Link to={`blog/${featuredPost.slug}`}>
             <section aria-label="featured-post" className="h-64 md:h-80 relative mx-auto rounded-md my-12 shadow-2xl hover:shadow-base dark:shadow-accent/50 dark:hover:shadow-accent hover:scale-101 duration-500">
                 {featuredPost.image && (<img className="h-full w-full object-cover rounded-md" src={featuredPost.image} alt={featuredPost.slug} />)}
@@ -44,5 +44,5 @@ export default function FeaturedPost() {
                 </div>
             </section >
         </Link>
-    )
+    ) : null
 }

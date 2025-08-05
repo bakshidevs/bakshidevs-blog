@@ -15,7 +15,7 @@ export default function LatestBlogsSection() {
                 </Link>
             </div>
             <div className="w-full grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-4 gap-3">
-                {publishedBlogs.slice(1, 5).map((blog) => (
+                {publishedBlogs.slice(0, 5).map((blog) => (
                         <Link key={blog.slug} to={`/blog/${blog.slug}`}>
                             <BlogCard blog={blog} />
                         </Link>
